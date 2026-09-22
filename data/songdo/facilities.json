@@ -1,0 +1,415 @@
+{
+  "park": "songdo",
+  "name": "송도 센트럴파크",
+  "address": "인천광역시 연수구 컨벤시아대로 160 일원",
+  "buttonLabel": "공원 정보",
+  "center": { "lat": 37.3925, "lng": 126.6370 },
+  "zoom": 15,
+  "overview": {
+    "summary": "국내 최초로 바닷물을 끌어들인 해수공원입니다. 공원 한가운데를 가로지르는 길이 1.8km 인공 해수수로에 수상택시와 보트가 다니고, 서쪽 선셋정원부터 동쪽 테라스정원까지 다섯 개의 테마정원으로 이어집니다.",
+    "area": "370,750㎡ (수로 길이 1.8km, 폭 12~110m)",
+    "hours": "상시 개방",
+    "fee": "무료 (보트·자전거 등 개별 시설은 유료)",
+    "contact": "032-456-2860 인천시설공단 송도공원사업단",
+    "transport": [
+      "인천1호선 센트럴파크역 4번 출구에서 도보 3분",
+      "인천1호선 인천대입구역 4번 출구에서 이스트보트하우스까지 도보 약 10분",
+      "시내버스 '센트럴파크1·2' 정류장 하차"
+    ],
+    "note": "시설 위치는 공개 지도 데이터와 공식 시설안내를 기준으로 표시했습니다. 일부는 구역 설명을 근거로 추정한 위치입니다.",
+    "sources": [
+      { "label": "인천시설공단 송도공원 시설안내", "url": "https://www.insiseol.or.kr/park/songdo/facility/central.jsp" },
+      { "label": "인천 연수구 문화관광", "url": "https://www.yeonsu.go.kr/tour/park/songdo.asp" }
+    ],
+    "leaflet": {
+      "label": "송도국제도시 주요공원 안내 리플렛 (인천시설공단)",
+      "url": "https://www.insiseol.or.kr/park/songdo/bbs/bbsMsgDetail.do?msg_seq=1645&bcd=songdo_data"
+    }
+  },
+  "facilities": [
+    {
+      "id": "west-boat-house",
+      "name": "웨스트보트하우스",
+      "category": "편의시설",
+      "lat": 37.393895,
+      "lng": 126.630340,
+      "coordSource": "확인",
+      "summary": "공원 서쪽 끝 수상택시 선착장입니다. 왕복 약 20분 유람 코스입니다.",
+      "details": [
+        "선셋정원 구역, 인천아트센터 방향",
+        "트라이볼과 GCF브릿지를 지나 토끼섬까지 갔다 돌아오는 왕복 코스",
+        "평일 매시 정각 출항, 공휴일은 정각과 30분 출항"
+      ],
+      "fee": "대인 4,000원 · 소인 2,000원",
+      "contact": "032-834-4609",
+      "sources": [{ "label": "인천시설공단 송도공원 시설안내", "url": "https://www.insiseol.or.kr/park/songdo/facility/central.jsp" }]
+    },
+    {
+      "id": "sunset-garden",
+      "name": "선셋정원",
+      "category": "휴게시설",
+      "lat": 37.394500,
+      "lng": 126.631200,
+      "coordSource": "추정",
+      "summary": "공원 서쪽 끝, 노을이 아름다운 수변 휴식공간입니다.",
+      "details": [
+        "웨스트보트하우스, 수변무대, 어린이 정원, 큐브 조형물로 구성",
+        "인천아트센터·트라이볼과 인접"
+      ],
+      "sources": [{ "label": "인천시설공단 송도공원 시설안내", "url": "https://www.insiseol.or.kr/park/songdo/facility/central.jsp" }]
+    },
+    {
+      "id": "waterside-stage",
+      "name": "수변무대",
+      "category": "공연시설",
+      "lat": 37.394200,
+      "lng": 126.631300,
+      "coordSource": "추정",
+      "summary": "선셋정원 수변에 있는 상설 야외 공연무대입니다.",
+      "sources": [{ "label": "인천시설공단 송도공원 시설안내", "url": "https://www.insiseol.or.kr/park/songdo/facility/central.jsp" }]
+    },
+    {
+      "id": "sea-foot-spa",
+      "name": "해수족욕장",
+      "category": "수경시설",
+      "lat": 37.393800,
+      "lng": 126.630700,
+      "coordSource": "추정",
+      "summary": "웨스트보트하우스 옆 해수 족욕 시설입니다.",
+      "details": ["매주 월요일 휴장", "우천이나 강풍 시 운영 중단"],
+      "hours": "5월~10월 11:00~17:00",
+      "sources": [{ "label": "송도라이프 이용정보 2026", "url": "https://songdo.life/guides/songdo-centralpark-complete-guide" }]
+    },
+    {
+      "id": "tribowl",
+      "name": "트라이볼",
+      "category": "공연시설",
+      "lat": 37.394254,
+      "lng": 126.634864,
+      "coordSource": "확인",
+      "summary": "수로 위에 떠 있는 듯한 곡면 건축물입니다. 전시와 공연이 열립니다.",
+      "details": ["호수1교 인근 수변에 위치", "인천을 대표하는 건축 랜드마크"],
+      "sources": [{ "label": "인천 연수구 문화관광", "url": "https://www.yeonsu.go.kr/tour/park/songdo.asp" }]
+    },
+    {
+      "id": "sea-water-canal",
+      "name": "인공 해수수로",
+      "category": "수경시설",
+      "lat": 37.393200,
+      "lng": 126.637200,
+      "coordSource": "추정",
+      "summary": "국내 최초로 바닷물을 끌어들인 길이 1.8km 인공수로입니다.",
+      "details": [
+        "길이 약 1.8km, 폭 12~110m",
+        "정화한 해수 약 9만 톤이 순환하며 숭어와 게가 서식",
+        "3단계 여과와 자외선 살균으로 수질 관리",
+        "호수1교, GCF브릿지, 게일브릿지, 스트롤링가든브릿지가 수로를 지납니다"
+      ],
+      "sources": [{ "label": "인천시설공단 송도공원 시설안내", "url": "https://www.insiseol.or.kr/park/songdo/facility/central.jsp" }]
+    },
+    {
+      "id": "sensibility-garden",
+      "name": "감성정원",
+      "category": "휴게시설",
+      "lat": 37.395100,
+      "lng": 126.635600,
+      "coordSource": "추정",
+      "summary": "지구촌의 얼굴과 관찰데크가 있는 경관 관찰 공간입니다.",
+      "details": ["관찰데크와 간석지원으로 구성"],
+      "sources": [{ "label": "인천시설공단 송도공원 시설안내", "url": "https://www.insiseol.or.kr/park/songdo/facility/central.jsp" }]
+    },
+    {
+      "id": "faces-of-global-village",
+      "name": "지구촌의 얼굴",
+      "category": "휴게시설",
+      "lat": 37.395232,
+      "lng": 126.635742,
+      "coordSource": "확인",
+      "summary": "세계 120개국을 상징하는 탈 조형 작품입니다.",
+      "details": ["감성정원 구역의 대표 조형물", "수변산책로 북측 구간"],
+      "sources": [{ "label": "인천시설공단 송도공원 시설안내", "url": "https://www.insiseol.or.kr/park/songdo/facility/central.jsp" }]
+    },
+    {
+      "id": "waterside-trail",
+      "name": "수변산책로",
+      "category": "산책로",
+      "lat": 37.394726,
+      "lng": 126.635952,
+      "coordSource": "확인",
+      "summary": "수로를 따라 이어지는 공원 대표 산책로입니다.",
+      "details": ["감성정원에서 잔디광장까지 북측 수변을 따라 연결", "공원 전체를 한 바퀴 도는 데 1시간에서 1시간 30분"],
+      "sources": [{ "label": "송도라이프 산책 코스 2026", "url": "https://songdo.life/guides/songdo-centralpark-complete-guide" }]
+    },
+    {
+      "id": "visitor-center",
+      "name": "센트럴파크 안내소",
+      "category": "편의시설",
+      "lat": 37.392276,
+      "lng": 126.636328,
+      "coordSource": "확인",
+      "summary": "공원 남서측 방문자 안내소입니다. 인천종합관광안내소가 함께 있습니다.",
+      "details": ["센트럴파크역 4번 출구에서 가까운 공원 주 진입부"],
+      "sources": [{ "label": "인천시설공단 송도공원 시설안내", "url": "https://www.insiseol.or.kr/park/songdo/facility/central.jsp" }]
+    },
+    {
+      "id": "chojiwon",
+      "name": "초지원",
+      "category": "휴게시설",
+      "lat": 37.393000,
+      "lng": 126.637200,
+      "coordSource": "추정",
+      "summary": "조형물과 공공미술을 감상하는 복합 예술 공간입니다.",
+      "details": [
+        "오줌싸개동상, 관찰데크, 습지원, 반딧불이 집",
+        "자연학습공간과 어린이놀이공원, 잔디광장을 포함"
+      ],
+      "sources": [{ "label": "인천시설공단 송도공원 시설안내", "url": "https://www.insiseol.or.kr/park/songdo/facility/central.jsp" }]
+    },
+    {
+      "id": "lawn-plaza",
+      "name": "잔디광장",
+      "category": "공연시설",
+      "lat": 37.393629,
+      "lng": 126.637989,
+      "coordSource": "확인",
+      "summary": "대형 야외행사가 열리는 중앙 잔디광장입니다.",
+      "details": [
+        "2026년 I♥FEsta 송도가 열린 곳",
+        "센트럴파크 최초의 수상무대가 이 일대 수변에 설치되어 약 5,600명이 참여",
+        "행사 주소는 센트럴로 217"
+      ],
+      "sources": [{ "label": "경인매일 I♥FEsta 송도", "url": "https://www.kmaeil.com/news/articleView.html?idxno=651620" }]
+    },
+    {
+      "id": "world-writing-museum",
+      "name": "국립세계문자박물관",
+      "category": "편의시설",
+      "lat": 37.394441,
+      "lng": 126.638002,
+      "coordSource": "확인",
+      "summary": "공원 북측에 자리한 세계 문자 주제 국립박물관입니다.",
+      "details": ["2023년 6월 개관", "주변이 조각과 공공미술 산책 구역"],
+      "sources": [{ "label": "인천 연수구 문화관광", "url": "https://www.yeonsu.go.kr/tour/park/songdo.asp" }]
+    },
+    {
+      "id": "observation-deck",
+      "name": "전망데크",
+      "category": "휴게시설",
+      "lat": 37.394992,
+      "lng": 126.639770,
+      "coordSource": "확인",
+      "summary": "공원 북동쪽 구릉의 수로 조망 데크입니다.",
+      "details": ["공원은 한국의 동고서저 지형을 본떠 북동쪽을 구릉으로 조성했습니다"],
+      "sources": [{ "label": "인천 연수구 문화관광", "url": "https://www.yeonsu.go.kr/tour/park/songdo.asp" }]
+    },
+    {
+      "id": "un-plaza",
+      "name": "UN광장",
+      "category": "휴게시설",
+      "lat": 37.391772,
+      "lng": 126.638823,
+      "coordSource": "확인",
+      "summary": "테라스정원 구역의 행사·문화 광장입니다.",
+      "details": ["민속놀이마당과 함께 연중 다양한 행사가 열립니다"],
+      "sources": [{ "label": "인천시설공단 송도공원 시설안내", "url": "https://www.insiseol.or.kr/park/songdo/facility/central.jsp" }]
+    },
+    {
+      "id": "rabbit-island",
+      "name": "토끼섬",
+      "category": "휴게시설",
+      "lat": 37.392011,
+      "lng": 126.639630,
+      "coordSource": "확인",
+      "summary": "수로 안 인공섬에 토끼가 사는 명소입니다.",
+      "details": ["공식 리플렛의 센트럴파크 주요시설", "수상택시 왕복 코스의 반환점"],
+      "sources": [{ "label": "송도국제도시 주요공원 안내 리플렛", "url": "https://www.insiseol.or.kr/park/songdo/bbs/bbsMsgDetail.do?msg_seq=1645&bcd=songdo_data" }]
+    },
+    {
+      "id": "deer-farm",
+      "name": "꽃사슴정원",
+      "category": "휴게시설",
+      "lat": 37.392414,
+      "lng": 126.639200,
+      "coordSource": "확인",
+      "summary": "산책정원 서편에서 꽃사슴을 볼 수 있는 사육장입니다.",
+      "details": [
+        "울타리 밖에서 관람하는 방식",
+        "먹이 주기와 울타리 안으로 손 넣기는 금지",
+        "동편에 별도 사육 구역이 하나 더 있습니다"
+      ],
+      "hours": "08:30~17:30",
+      "sources": [{ "label": "송도라이프 이용정보 2026", "url": "https://songdo.life/guides/songdo-centralpark-complete-guide" }]
+    },
+    {
+      "id": "acupressure-trail",
+      "name": "지압길",
+      "category": "산책로",
+      "lat": 37.393922,
+      "lng": 126.639504,
+      "coordSource": "확인",
+      "summary": "토끼섬 북쪽에 조성된 맨발 지압 산책길입니다.",
+      "sources": [{ "label": "인천시설공단 송도공원 시설안내", "url": "https://www.insiseol.or.kr/park/songdo/facility/central.jsp" }]
+    },
+    {
+      "id": "hanok-village",
+      "name": "송도한옥마을",
+      "category": "휴게시설",
+      "lat": 37.390705,
+      "lng": 126.639230,
+      "coordSource": "확인",
+      "summary": "공원 남측 전통 한옥 단지입니다. 국내 유일 5성급 한옥호텔이 있습니다.",
+      "details": [
+        "2015년 조성",
+        "경원재 앰배서더 인천이 바로 서편에 인접",
+        "2016년 한국관광공사 한옥호텔 최초 5성 인증"
+      ],
+      "sources": [{ "label": "인천 연수구 문화관광", "url": "https://www.yeonsu.go.kr/tour/park/songdo.asp" }]
+    },
+    {
+      "id": "strolling-garden",
+      "name": "산책정원",
+      "category": "휴게시설",
+      "lat": 37.391640,
+      "lng": 126.641806,
+      "coordSource": "확인",
+      "summary": "소나무 산책로와 계곡이 있는 전통 테마 공간입니다.",
+      "details": [
+        "풀을 뜯는 꽃사슴을 만날 수 있는 구역",
+        "메타세쿼이아 숲길과 계곡 조성",
+        "명경정과 청명정 정자가 있습니다"
+      ],
+      "sources": [{ "label": "인천시설공단 송도공원 시설안내", "url": "https://www.insiseol.or.kr/park/songdo/facility/central.jsp" }]
+    },
+    {
+      "id": "songhwajeong",
+      "name": "송화정",
+      "category": "휴게시설",
+      "lat": 37.391732,
+      "lng": 126.641151,
+      "coordSource": "확인",
+      "summary": "산책정원 높은 곳의 정자입니다. 야경 조망 명소입니다.",
+      "sources": [{ "label": "인천시설공단 송도공원 시설안내", "url": "https://www.insiseol.or.kr/park/songdo/facility/central.jsp" }]
+    },
+    {
+      "id": "forest-library",
+      "name": "숲속 도서관",
+      "category": "편의시설",
+      "lat": 37.392345,
+      "lng": 126.641563,
+      "coordSource": "확인",
+      "summary": "산책정원 안의 작은 야외 도서 쉼터입니다.",
+      "details": ["체력단련 시설이 인접해 있습니다"],
+      "sources": [{ "label": "인천시설공단 송도공원 시설안내", "url": "https://www.insiseol.or.kr/park/songdo/facility/central.jsp" }]
+    },
+    {
+      "id": "playground",
+      "name": "어린이놀이터",
+      "category": "놀이시설",
+      "lat": 37.392789,
+      "lng": 126.641385,
+      "coordSource": "확인",
+      "summary": "산책정원 북쪽의 어린이 놀이시설입니다.",
+      "details": ["공원 동측에 또 다른 놀이시설이 있습니다"],
+      "sources": [{ "label": "인천시설공단 송도공원 시설안내", "url": "https://www.insiseol.or.kr/park/songdo/facility/central.jsp" }]
+    },
+    {
+      "id": "terrace-garden",
+      "name": "테라스정원",
+      "category": "휴게시설",
+      "lat": 37.389514,
+      "lng": 126.641116,
+      "coordSource": "확인",
+      "summary": "UN광장과 이스트보트하우스가 있는 문화예술 공간입니다.",
+      "details": ["민속놀이마당이 함께 조성", "보트하우스와 주차장이 인접한 공원 동측 진입 구역"],
+      "sources": [{ "label": "인천시설공단 송도공원 시설안내", "url": "https://www.insiseol.or.kr/park/songdo/facility/central.jsp" }]
+    },
+    {
+      "id": "east-boat-house",
+      "name": "이스트보트하우스",
+      "category": "편의시설",
+      "lat": 37.390396,
+      "lng": 126.643623,
+      "coordSource": "확인",
+      "summary": "공원 동쪽 끝 수상레저 선착장입니다. 문보트와 파티보트를 탈 수 있습니다.",
+      "details": [
+        "테라스정원 구역, 포스코타워-송도 방향",
+        "문보트 3인 30분 40,000원 · 신데렐라보트 4인 30분 44,000원",
+        "파티보트 6인 30분 45,000원 · 구르미보트 5인 30분 42,000원",
+        "SUP 60분 15,000원, 카약과 카누 20,000원",
+        "다인승 자전거 대여 병행. 1인승 60분 10,000원, 2인승 60분 15,000원"
+      ],
+      "hours": "09:30~24:30 (우천 시 조정)",
+      "contact": "032-831-4609",
+      "sources": [
+        { "label": "인천시설공단 송도공원 시설안내", "url": "https://www.insiseol.or.kr/park/songdo/facility/central.jsp" },
+        { "label": "송도라이프 보트 요금 2026", "url": "https://songdo.life/guides/songdo-centralpark-complete-guide" }
+      ]
+    },
+    {
+      "id": "parking-east",
+      "name": "주차장 (동측)",
+      "category": "주차",
+      "lat": 37.389853,
+      "lng": 126.643076,
+      "coordSource": "확인",
+      "summary": "이스트보트하우스와 테라스정원 이용 시 가까운 주차장입니다.",
+      "details": [
+        "내비게이션에서 '송도센트럴파크주차장1'로 검색",
+        "요금은 현장 요금판 기준",
+        "공원 전체 지하주차장 규모는 약 2,715면"
+      ],
+      "sources": [{ "label": "송도라이프 주차 가이드", "url": "https://songdo.life/guides/songdo-parking-complete-guide" }]
+    },
+    {
+      "id": "parking-south",
+      "name": "주차장 (남측·한옥마을 방면)",
+      "category": "주차",
+      "lat": 37.389534,
+      "lng": 126.640297,
+      "coordSource": "확인",
+      "summary": "한옥마을과 테크노파크로 방면 주차 구역입니다.",
+      "sources": [{ "label": "송도라이프 주차 가이드", "url": "https://songdo.life/guides/songdo-parking-complete-guide" }]
+    },
+    {
+      "id": "restroom-north",
+      "name": "화장실 (북측·세계문자박물관 방면)",
+      "category": "화장실",
+      "lat": 37.395062,
+      "lng": 126.637125,
+      "coordSource": "확인",
+      "summary": "공원 북측 수변산책로변 공중화장실입니다.",
+      "details": ["서편에도 화장실이 한 곳 더 있습니다"],
+      "sources": [{ "label": "인천시설공단 송도공원 시설안내", "url": "https://www.insiseol.or.kr/park/songdo/facility/central.jsp" }]
+    },
+    {
+      "id": "restroom-central",
+      "name": "화장실 (중앙·토끼섬 방면)",
+      "category": "화장실",
+      "lat": 37.393223,
+      "lng": 126.639744,
+      "coordSource": "확인",
+      "summary": "토끼섬과 지압길 인근 공중화장실입니다.",
+      "sources": [{ "label": "인천시설공단 송도공원 시설안내", "url": "https://www.insiseol.or.kr/park/songdo/facility/central.jsp" }]
+    },
+    {
+      "id": "restroom-hanok",
+      "name": "화장실 (남측·한옥마을 방면)",
+      "category": "화장실",
+      "lat": 37.390866,
+      "lng": 126.640411,
+      "coordSource": "확인",
+      "summary": "UN광장과 한옥마을 인근 공중화장실입니다.",
+      "sources": [{ "label": "인천시설공단 송도공원 시설안내", "url": "https://www.insiseol.or.kr/park/songdo/facility/central.jsp" }]
+    },
+    {
+      "id": "restroom-terrace",
+      "name": "화장실 (테라스정원)",
+      "category": "화장실",
+      "lat": 37.389672,
+      "lng": 126.641406,
+      "coordSource": "확인",
+      "summary": "테라스정원 구역 공중화장실입니다.",
+      "sources": [{ "label": "인천시설공단 송도공원 시설안내", "url": "https://www.insiseol.or.kr/park/songdo/facility/central.jsp" }]
+    }
+  ]
+}
