@@ -3,7 +3,10 @@
   "name": "청라호수공원",
   "address": "인천광역시 서해구 크리스탈로 131",
   "buttonLabel": "호수 정보",
-  "center": { "lat": 37.5330, "lng": 126.6350 },
+  "center": {
+    "lat": 37.533,
+    "lng": 126.635
+  },
   "zoom": 15,
   "overview": {
     "summary": "청라국제도시 한가운데 조성된 국내 최대급 인공 호수공원입니다. 호수를 둘러싼 4.3km 순환동선이 에코존·전통존·레저존·아트존을 하나로 잇고, 대형 음악분수와 야외음악당, 수상레저, 놀이터, 전통 누각이 호수 주변에 흩어져 있습니다.",
@@ -16,262 +19,45 @@
       "전철 공항철도 청라국제도시역, 인천2호선 가정역·서해구청역·아시아드경기장역",
       "정류장 '호수공원'(북측), '청라호수공원(남측)', '청라중앙호수공원입구'"
     ],
-    "note": "공원 안에 화장실과 음수전, 장애인 전용 화장실이 있습니다. 정확한 위치가 공개되어 있지 않아 지도에는 표시하지 않았습니다.",
+    "note": "시설 위치는 인천시설공단 공식 안내 리플렛의 배치도를 기준으로 표시했습니다. 배치도는 실제 축척과 다를 수 있어 오차가 있을 수 있습니다.",
     "sources": [
-      { "label": "인천시설공단 청라공원", "url": "https://www.insiseol.or.kr/park/cheongna/facility/lake.jsp" },
-      { "label": "인천시설공단 시설개요", "url": "https://www.insiseol.or.kr/park/cheongna/introduce/facility.jsp" },
-      { "label": "인천시설공단 오시는길", "url": "https://www.insiseol.or.kr/park/cheongna/introduce/location.jsp" },
-      { "label": "IFEZ 청라호수공원", "url": "https://www.ifez.go.kr/investment/region/plan/chungra.do?plan_se=C03010" }
-    ]
+      {
+        "label": "인천시설공단 청라공원",
+        "url": "https://www.insiseol.or.kr/park/cheongna/facility/lake.jsp"
+      },
+      {
+        "label": "인천시설공단 시설개요",
+        "url": "https://www.insiseol.or.kr/park/cheongna/introduce/facility.jsp"
+      },
+      {
+        "label": "인천시설공단 오시는길",
+        "url": "https://www.insiseol.or.kr/park/cheongna/introduce/location.jsp"
+      },
+      {
+        "label": "IFEZ 청라호수공원",
+        "url": "https://www.ifez.go.kr/investment/region/plan/chungra.do?plan_se=C03010"
+      }
+    ],
+    "leaflet": {
+      "label": "인천시설공단 청라공원 안내 리플렛 (공식)",
+      "url": "https://www.insiseol.or.kr/fileviewskin/doc_mobile.xhtml?fn=dosiga_pumeun_boseok_cheongragongwon_annae_ripulled(hangukeo_ver.).pdf&rs=/fileview/bbs/cheongna_data/2025"
+    }
   },
   "facilities": [
     {
-      "id": "music-fountain",
-      "name": "음악분수",
-      "category": "수경시설",
-      "lat": 37.530797,
-      "lng": 126.633780,
-      "coordSource": "확인",
-      "summary": "길이 120m, 최고 75m 물줄기의 대형 음악분수입니다.",
-      "details": [
-        "규모 120m(연장) × 25m(폭), 고사분수 연출 높이 75m",
-        "호수 서편 수면 위에 설치되어 레이크하우스와 순환산책로에서 관람",
-        "요일별 선곡 테마 운영. 금요일 '도시 감성 드라이브', 토요일 '페스티벌 나이트', 일요일 '힐링&리커버리'"
-      ],
-      "hours": "2026-05-01~10-04 · 주간 화~일 12:20~13:00 · 야간 금~일과 공휴일 4~5월·9~10월 20:00~21:00, 6~8월 20:15~21:15",
-      "fee": "무료",
-      "contact": "032-456-2752~7",
-      "sources": [
-        { "label": "인천시설공단 음악분수", "url": "https://www.insiseol.or.kr/park/cheongna/facility/music.jsp" },
-        { "label": "2026년 연주곡 목록 및 시간표", "url": "https://www.insiseol.or.kr/park/cheongna/bbs/bbsMsgDetail.do?msg_seq=36765&bcd=notice" }
-      ]
-    },
-    {
-      "id": "outdoor-concert-hall",
-      "name": "야외음악당",
-      "category": "공연시설",
-      "lat": 37.528254,
-      "lng": 126.634481,
-      "coordSource": "확인",
-      "summary": "호수 남측 플라워아일랜드 쪽에 있는 야외 공연장입니다.",
-      "details": [
-        "1층 부속시설: 커뮤니티 이야기장 63㎡, 로비와 전시·휴게공간 118㎡",
-        "세미나실 1·2 각 11㎡, 분장실 남 33㎡·여 39㎡, 연습실 75㎡",
-        "대관 신청 가능"
-      ],
-      "contact": "032-456-2732 대관",
-      "sources": [
-        { "label": "인천시설공단 야외음악당", "url": "https://www.insiseol.or.kr/park/cheongna/facility/outdoor.jsp" }
-      ]
-    },
-    {
-      "id": "flower-island",
-      "name": "플라워아일랜드",
+      "id": "bird-observatory",
+      "name": "조류관찰대",
       "category": "휴게시설",
-      "lat": 37.527581,
-      "lng": 126.634617,
-      "coordSource": "확인",
-      "summary": "호수 남쪽 인공섬입니다. 야외음악당과 카페가 있습니다.",
-      "details": [
-        "플라워뮤직아일랜드로도 불립니다",
-        "호수 안 인공섬 두 곳 중 남측 섬",
-        "야외음악당과 카페가 섬 안에 위치"
-      ],
+      "lat": 37.5417,
+      "lng": 126.6344,
+      "coordSource": "배치도",
+      "summary": "다양한 수생식물과 생태공간의 서식지를 찾는 조류를 관찰하는 공간입니다.",
+      "leafletNo": "37",
       "sources": [
-        { "label": "인천시설공단 청라공원", "url": "https://www.insiseol.or.kr/park/cheongna/facility/lake.jsp" }
-      ]
-    },
-    {
-      "id": "water-plaza",
-      "name": "물속광장",
-      "category": "수경시설",
-      "lat": 37.535378,
-      "lng": 126.634999,
-      "coordSource": "확인",
-      "summary": "호수 북측의 벽천이 있는 수변 광장입니다.",
-      "details": [
-        "벽천 형태의 수경 연출",
-        "역사광장 바닥분수, 생태축제의 섬과 함께 공원 북측 구역에 위치",
-        "행사 때 부대 프로그램 장소로 쓰입니다"
-      ],
-      "sources": [
-        { "label": "IFEZ 청라호수공원", "url": "https://www.ifez.go.kr/investment/region/plan/chungra.do?plan_se=C03010" }
-      ]
-    },
-    {
-      "id": "history-plaza-fountain",
-      "name": "역사광장 바닥분수",
-      "category": "수경시설",
-      "lat": 37.536046,
-      "lng": 126.633006,
-      "coordSource": "확인",
-      "summary": "인천역사마당에 설치된 바닥분수입니다.",
-      "details": [
-        "공원 북측 인천역사마당 안에 위치",
-        "물속광장 바로 서쪽, 청라루로 이어지는 순환산책로 구간"
-      ],
-      "sources": [
-        { "label": "인천시설공단 청라공원", "url": "https://www.insiseol.or.kr/park/cheongna/facility/lake.jsp" }
-      ]
-    },
-    {
-      "id": "cheongnaru",
-      "name": "청라루",
-      "category": "휴게시설",
-      "lat": 37.540674,
-      "lng": 126.633341,
-      "coordSource": "확인",
-      "summary": "호수 북서쪽에 있는 2층 전통 누각입니다.",
-      "details": [
-        "청라공원 홈페이지에서 내부를 VR로 볼 수 있습니다",
-        "전통존 구역의 중심 시설"
-      ],
-      "sources": [
-        { "label": "인천시설공단 청라공원", "url": "https://www.insiseol.or.kr/park/cheongna/facility/lake.jsp" }
-      ]
-    },
-    {
-      "id": "cheongnajeong",
-      "name": "청라정",
-      "category": "휴게시설",
-      "lat": 37.541500,
-      "lng": 126.634300,
-      "coordSource": "추정",
-      "summary": "호수 북서쪽 외곽의 팔각정입니다. 주변에 전통 정원이 있습니다.",
-      "details": [
-        "청라루와 마주 보는 위치",
-        "좌표는 청라루 기준 북동측으로 추정한 값입니다"
-      ],
-      "sources": [
-        { "label": "인천시설공단 청라공원", "url": "https://www.insiseol.or.kr/park/cheongna/facility/lake.jsp" }
-      ]
-    },
-    {
-      "id": "lake-house",
-      "name": "레이크하우스",
-      "category": "편의시설",
-      "lat": 37.538600,
-      "lng": 126.633300,
-      "coordSource": "추정",
-      "summary": "카페테리아와 매점, 수상레저 선착장이 있는 2층 복합시설입니다.",
-      "details": [
-        "연면적 895㎡, 지상 2층 (2019년 준공)",
-        "1층 매점과 수상레저 매표소·대합실, 2층 전망데크와 카페테리아",
-        "신데렐라보트·문보트·패밀리보트 운영",
-        "2026년 9월 23일 새 운영사업자와 함께 운영 재개",
-        "좌표는 제1주차장 인근으로 추정한 값입니다"
-      ],
-      "hours": "2026-09-23부터 운영 재개",
-      "fee": "보트 35,000~39,000원",
-      "sources": [
-        { "label": "인천시설공단 청라공원", "url": "https://www.insiseol.or.kr/park/cheongna/facility/lake.jsp" },
-        { "label": "한국NGO신문", "url": "https://www.ngonews.kr/news/articleView.html?idxno=238613" }
-      ]
-    },
-    {
-      "id": "fantasy-forest",
-      "name": "환상의 숲",
-      "category": "놀이시설",
-      "lat": 37.526120,
-      "lng": 126.634066,
-      "coordSource": "확인",
-      "summary": "동화 테마 어린이 놀이터입니다. 여름에는 물놀이터로 운영합니다.",
-      "details": [
-        "피노키오 테마 놀이대가 있어 피노키오 놀이터로도 불립니다",
-        "여름철 7~8월에는 12세 이하 어린이 물놀이터로 운영",
-        "어린이용 짚라인과 트램폴린이 인근에 있습니다",
-        "가장 가까운 주차장은 제4주차장"
-      ],
-      "sources": [
-        { "label": "인천시설공단 청라공원", "url": "https://www.insiseol.or.kr/park/cheongna/facility/lake.jsp" }
-      ]
-    },
-    {
-      "id": "multi-plaza",
-      "name": "멀티프라자",
-      "category": "놀이시설",
-      "lat": 37.526800,
-      "lng": 126.632900,
-      "coordSource": "추정",
-      "summary": "야외무대와 인라인트랙, 잔디광장이 모인 복합 체육광장입니다.",
-      "details": [
-        "축구와 야구 등 구기, 인라인스케이트와 스케이트보드 이용 가능",
-        "환상의 숲 놀이터 바로 옆 공원 남서측",
-        "행사 때 부대 무대로 쓰입니다",
-        "좌표는 환상의 숲 인접 위치로 추정한 값입니다"
-      ],
-      "sources": [
-        { "label": "인천시설공단 청라공원", "url": "https://www.insiseol.or.kr/park/cheongna/facility/lake.jsp" }
-      ]
-    },
-    {
-      "id": "mulbit-madang",
-      "name": "물빛마당",
-      "category": "수경시설",
-      "lat": 37.530300,
-      "lng": 126.636400,
-      "coordSource": "추정",
-      "summary": "청라호수도서관 옆에 있는 무료 족욕장입니다.",
-      "details": [
-        "발만 담그는 족욕 시설로 입수와 전신 이용은 금지입니다",
-        "제3주차장에서 도보 약 5분",
-        "어린이는 보호자 동반 필수",
-        "음식물, 흡연, 반려동물 출입 금지",
-        "좌표는 청라호수도서관 인접 위치로 추정한 값입니다"
-      ],
-      "sources": [
-        { "label": "인천시설공단 이용수칙 안내", "url": "https://www.insiseol.or.kr/park/cheongna/bbs/bbsMsgDetail.do?msg_seq=36932&bcd=notice" }
-      ]
-    },
-    {
-      "id": "canalway-mulgyeolmaru",
-      "name": "커낼웨이 물결마루",
-      "category": "수경시설",
-      "lat": 37.533100,
-      "lng": 126.646500,
-      "coordSource": "추정",
-      "summary": "커낼웨이 지하 1층 수변의 무료 족욕장입니다.",
-      "details": [
-        "발만 담그는 족욕 시설로 입수와 전신 이용은 금지입니다",
-        "지상에서 지하 1층 문화2공원 커낼웨이로 내려가면 있습니다",
-        "엄밀히는 청라호수공원이 아니라 동쪽으로 이어지는 문화2공원 구간에 있습니다",
-        "어린이는 보호자 동반 필수",
-        "좌표는 청라커낼로288번길 인근 수로 구간으로 추정한 값입니다"
-      ],
-      "sources": [
-        { "label": "인천시설공단 이용수칙 안내", "url": "https://www.insiseol.or.kr/park/cheongna/bbs/bbsMsgDetail.do?msg_seq=36933&bcd=notice" }
-      ]
-    },
-    {
-      "id": "lake-library",
-      "name": "청라호수도서관",
-      "category": "편의시설",
-      "lat": 37.530578,
-      "lng": 126.636227,
-      "coordSource": "확인",
-      "summary": "호수 동편 수변에 있는 공공도서관입니다.",
-      "details": [
-        "호수공원 동쪽, 청라 더샵 레이크파크 건너편",
-        "바로 옆에 족욕장 물빛마당이 있습니다"
-      ],
-      "sources": [
-        { "label": "인천시설공단 청라공원", "url": "https://www.insiseol.or.kr/park/cheongna/facility/lake.jsp" }
-      ]
-    },
-    {
-      "id": "eco-festival-island",
-      "name": "생태축제의 섬",
-      "category": "휴게시설",
-      "lat": 37.537934,
-      "lng": 126.634449,
-      "coordSource": "확인",
-      "summary": "공원 북측 에코존의 생태 주제 구역입니다.",
-      "details": [
-        "공원을 이루는 에코존·전통존·레저존·아트존 가운데 북측 에코존",
-        "물속광장과 청라루 사이 순환산책로 구간"
-      ],
-      "sources": [
-        { "label": "인천시설공단 청라공원", "url": "https://www.insiseol.or.kr/park/cheongna/facility/lake.jsp" }
+        {
+          "label": "인천시설공단 청라공원 안내 리플렛 (공식)",
+          "url": "https://www.insiseol.or.kr/fileviewskin/doc_mobile.xhtml?fn=dosiga_pumeun_boseok_cheongragongwon_annae_ripulled(hangukeo_ver.).pdf&rs=/fileview/bbs/cheongna_data/2025"
+        }
       ]
     },
     {
@@ -282,130 +68,715 @@
       "lng": 126.632532,
       "coordSource": "확인",
       "summary": "공원 북쪽 청라대로 쪽 주 진입 광장입니다.",
+      "sources": [
+        {
+          "label": "인천시설공단 청라공원",
+          "url": "https://www.insiseol.or.kr/park/cheongna/facility/lake.jsp"
+        },
+        {
+          "label": "인천시설공단 오시는길",
+          "url": "https://www.insiseol.or.kr/park/cheongna/introduce/location.jsp"
+        }
+      ],
       "details": [
         "청라루와 청라정이 있는 전통존으로 이어집니다",
         "인근에 '호수공원' 버스정류장이 있습니다"
-      ],
+      ]
+    },
+    {
+      "id": "cheongnaru",
+      "name": "청라루",
+      "category": "휴게시설",
+      "lat": 37.540674,
+      "lng": 126.633341,
+      "coordSource": "확인",
+      "summary": "호수를 조망할 수 있는 휴게·이벤트 공간입니다.",
+      "leafletNo": "38",
       "sources": [
-        { "label": "인천시설공단 오시는길", "url": "https://www.insiseol.or.kr/park/cheongna/introduce/location.jsp" }
+        {
+          "label": "인천시설공단 청라공원 안내 리플렛 (공식)",
+          "url": "https://www.insiseol.or.kr/fileviewskin/doc_mobile.xhtml?fn=dosiga_pumeun_boseok_cheongragongwon_annae_ripulled(hangukeo_ver.).pdf&rs=/fileview/bbs/cheongna_data/2025"
+        },
+        {
+          "label": "인천시설공단 청라공원",
+          "url": "https://www.insiseol.or.kr/park/cheongna/facility/lake.jsp"
+        }
+      ],
+      "details": [
+        "청라공원 홈페이지에서 내부를 VR로 볼 수 있습니다",
+        "전통존 구역의 중심 시설"
+      ]
+    },
+    {
+      "id": "lake-house",
+      "name": "레이크하우스",
+      "category": "편의시설",
+      "lat": 37.5401,
+      "lng": 126.6335,
+      "coordSource": "배치도",
+      "summary": "수상레저와 편의시설, 카페를 즐길 수 있는 공간입니다.",
+      "leafletNo": "39",
+      "sources": [
+        {
+          "label": "인천시설공단 청라공원 안내 리플렛 (공식)",
+          "url": "https://www.insiseol.or.kr/fileviewskin/doc_mobile.xhtml?fn=dosiga_pumeun_boseok_cheongragongwon_annae_ripulled(hangukeo_ver.).pdf&rs=/fileview/bbs/cheongna_data/2025"
+        },
+        {
+          "label": "인천시설공단 청라공원",
+          "url": "https://www.insiseol.or.kr/park/cheongna/facility/lake.jsp"
+        },
+        {
+          "label": "한국NGO신문",
+          "url": "https://www.ngonews.kr/news/articleView.html?idxno=238613"
+        }
+      ],
+      "hours": "2026-09-23부터 운영 재개",
+      "fee": "보트 35,000~39,000원",
+      "details": [
+        "연면적 895㎡, 지상 2층 (2019년 준공)",
+        "1층 매점과 수상레저 매표소·대합실, 2층 전망데크와 카페테리아",
+        "신데렐라보트·문보트·패밀리보트 운영",
+        "2026년 9월 23일 새 운영사업자와 함께 운영 재개"
+      ]
+    },
+    {
+      "id": "turtle-playground",
+      "name": "거북선 놀이터",
+      "category": "놀이시설",
+      "lat": 37.5378,
+      "lng": 126.6326,
+      "coordSource": "배치도",
+      "summary": "거북선 모양의 전통존 대표 놀이터입니다.",
+      "leafletNo": "40",
+      "sources": [
+        {
+          "label": "인천시설공단 청라공원 안내 리플렛 (공식)",
+          "url": "https://www.insiseol.or.kr/fileviewskin/doc_mobile.xhtml?fn=dosiga_pumeun_boseok_cheongragongwon_annae_ripulled(hangukeo_ver.).pdf&rs=/fileview/bbs/cheongna_data/2025"
+        }
+      ]
+    },
+    {
+      "id": "eco-festival-island",
+      "name": "생태축제섬",
+      "category": "휴게시설",
+      "lat": 37.537934,
+      "lng": 126.634449,
+      "coordSource": "확인",
+      "summary": "계절감을 느낄 수 있는 호수 중심의 넓은 잔디광장 섬입니다.",
+      "leafletNo": "41",
+      "sources": [
+        {
+          "label": "인천시설공단 청라공원 안내 리플렛 (공식)",
+          "url": "https://www.insiseol.or.kr/fileviewskin/doc_mobile.xhtml?fn=dosiga_pumeun_boseok_cheongragongwon_annae_ripulled(hangukeo_ver.).pdf&rs=/fileview/bbs/cheongna_data/2025"
+        },
+        {
+          "label": "인천시설공단 청라공원",
+          "url": "https://www.insiseol.or.kr/park/cheongna/facility/lake.jsp"
+        }
+      ],
+      "details": [
+        "공원을 이루는 에코존·전통존·레저존·아트존 가운데 북측 에코존",
+        "물속광장과 청라루 사이 순환산책로 구간"
+      ]
+    },
+    {
+      "id": "eco-maru",
+      "name": "생태마루",
+      "category": "휴게시설",
+      "lat": 37.537,
+      "lng": 126.6345,
+      "coordSource": "배치도",
+      "summary": "호수 경관을 한눈에 감상하며 쉬어갈 수 있는 소동산형 휴게시설입니다.",
+      "leafletNo": "42",
+      "sources": [
+        {
+          "label": "인천시설공단 청라공원 안내 리플렛 (공식)",
+          "url": "https://www.insiseol.or.kr/fileviewskin/doc_mobile.xhtml?fn=dosiga_pumeun_boseok_cheongragongwon_annae_ripulled(hangukeo_ver.).pdf&rs=/fileview/bbs/cheongna_data/2025"
+        }
+      ]
+    },
+    {
+      "id": "barefoot-trail",
+      "name": "맨발산책길",
+      "category": "산책로",
+      "lat": 37.539,
+      "lng": 126.6356,
+      "coordSource": "배치도",
+      "summary": "발끝으로 느끼는 자연, 건강과 힐링을 위한 자연 재활 공간입니다.",
+      "leafletNo": "34",
+      "sources": [
+        {
+          "label": "인천시설공단 청라공원 안내 리플렛 (공식)",
+          "url": "https://www.insiseol.or.kr/fileviewskin/doc_mobile.xhtml?fn=dosiga_pumeun_boseok_cheongragongwon_annae_ripulled(hangukeo_ver.).pdf&rs=/fileview/bbs/cheongna_data/2025"
+        }
+      ]
+    },
+    {
+      "id": "splash-playground",
+      "name": "풍덩이 놀이터",
+      "category": "놀이시설",
+      "lat": 37.5382,
+      "lng": 126.6357,
+      "coordSource": "배치도",
+      "summary": "거대한 풍덩이를 묘사한 생태공간의 대표 놀이터입니다.",
+      "leafletNo": "36",
+      "sources": [
+        {
+          "label": "인천시설공단 청라공원 안내 리플렛 (공식)",
+          "url": "https://www.insiseol.or.kr/fileviewskin/doc_mobile.xhtml?fn=dosiga_pumeun_boseok_cheongragongwon_annae_ripulled(hangukeo_ver.).pdf&rs=/fileview/bbs/cheongna_data/2025"
+        }
+      ]
+    },
+    {
+      "id": "history-plaza-fountain",
+      "name": "역사마당 분수",
+      "category": "수경시설",
+      "lat": 37.536046,
+      "lng": 126.633006,
+      "coordSource": "확인",
+      "summary": "인천의 지도와 지역별 다양한 역사를 담은 분수입니다.",
+      "leafletNo": "43",
+      "sources": [
+        {
+          "label": "인천시설공단 청라공원 안내 리플렛 (공식)",
+          "url": "https://www.insiseol.or.kr/fileviewskin/doc_mobile.xhtml?fn=dosiga_pumeun_boseok_cheongragongwon_annae_ripulled(hangukeo_ver.).pdf&rs=/fileview/bbs/cheongna_data/2025"
+        },
+        {
+          "label": "인천시설공단 청라공원",
+          "url": "https://www.insiseol.or.kr/park/cheongna/facility/lake.jsp"
+        }
+      ],
+      "details": [
+        "공원 북측 인천역사마당 안에 위치",
+        "물속광장 바로 서쪽, 청라루로 이어지는 순환산책로 구간"
+      ]
+    },
+    {
+      "id": "water-plaza",
+      "name": "물속광장 테마원",
+      "category": "수경시설",
+      "lat": 37.535378,
+      "lng": 126.634999,
+      "coordSource": "확인",
+      "summary": "넓은 광장에서 즐기는 테마정원과 휴식공간입니다.",
+      "leafletNo": "35",
+      "sources": [
+        {
+          "label": "인천시설공단 청라공원 안내 리플렛 (공식)",
+          "url": "https://www.insiseol.or.kr/fileviewskin/doc_mobile.xhtml?fn=dosiga_pumeun_boseok_cheongragongwon_annae_ripulled(hangukeo_ver.).pdf&rs=/fileview/bbs/cheongna_data/2025"
+        },
+        {
+          "label": "IFEZ 청라호수공원",
+          "url": "https://www.ifez.go.kr/investment/region/plan/chungra.do?plan_se=C03010"
+        }
+      ],
+      "details": [
+        "벽천 형태의 수경 연출",
+        "역사광장 바닥분수, 생태축제의 섬과 함께 공원 북측 구역에 위치",
+        "행사 때 부대 프로그램 장소로 쓰입니다"
+      ]
+    },
+    {
+      "id": "music-fountain",
+      "name": "음악분수",
+      "category": "수경시설",
+      "lat": 37.530797,
+      "lng": 126.63378,
+      "coordSource": "확인",
+      "summary": "연장 120m, 폭 25m 규모로 음악과 분수, 조명이 어우러진 청라호수공원의 명물입니다.",
+      "leafletNo": "24",
+      "sources": [
+        {
+          "label": "인천시설공단 청라공원 안내 리플렛 (공식)",
+          "url": "https://www.insiseol.or.kr/fileviewskin/doc_mobile.xhtml?fn=dosiga_pumeun_boseok_cheongragongwon_annae_ripulled(hangukeo_ver.).pdf&rs=/fileview/bbs/cheongna_data/2025"
+        },
+        {
+          "label": "인천시설공단 음악분수",
+          "url": "https://www.insiseol.or.kr/park/cheongna/facility/music.jsp"
+        },
+        {
+          "label": "2026년 연주곡 목록 및 시간표",
+          "url": "https://www.insiseol.or.kr/park/cheongna/bbs/bbsMsgDetail.do?msg_seq=36765&bcd=notice"
+        }
+      ],
+      "hours": "2026-05-01~10-04 · 주간 화~일 12:20~13:00 · 야간 금~일과 공휴일 4~5월·9~10월 20:00~21:00, 6~8월 20:15~21:15",
+      "fee": "무료",
+      "contact": "032-456-2752~7",
+      "details": [
+        "규모 120m(연장) × 25m(폭), 고사분수 연출 높이 75m",
+        "호수 서편 수면 위에 설치되어 레이크하우스와 순환산책로에서 관람",
+        "요일별 선곡 테마 운영. 금요일 '도시 감성 드라이브', 토요일 '페스티벌 나이트', 일요일 '힐링&리커버리'"
+      ]
+    },
+    {
+      "id": "heart-sculpture",
+      "name": "하트조형물",
+      "category": "휴게시설",
+      "lat": 37.5302,
+      "lng": 126.6336,
+      "coordSource": "배치도",
+      "summary": "계절감 있는 꽃과 함께 가족, 친구, 연인과 추억을 남기는 사랑의 하트 조형물입니다.",
+      "leafletNo": "25",
+      "sources": [
+        {
+          "label": "인천시설공단 청라공원 안내 리플렛 (공식)",
+          "url": "https://www.insiseol.or.kr/fileviewskin/doc_mobile.xhtml?fn=dosiga_pumeun_boseok_cheongragongwon_annae_ripulled(hangukeo_ver.).pdf&rs=/fileview/bbs/cheongna_data/2025"
+        }
+      ]
+    },
+    {
+      "id": "urban-beach",
+      "name": "어반비치",
+      "category": "휴게시설",
+      "lat": 37.5294,
+      "lng": 126.6338,
+      "coordSource": "배치도",
+      "summary": "해수욕장을 연상케 하는 도심 안의 해변에서 즐기는 여유입니다.",
+      "leafletNo": "26",
+      "sources": [
+        {
+          "label": "인천시설공단 청라공원 안내 리플렛 (공식)",
+          "url": "https://www.insiseol.or.kr/fileviewskin/doc_mobile.xhtml?fn=dosiga_pumeun_boseok_cheongragongwon_annae_ripulled(hangukeo_ver.).pdf&rs=/fileview/bbs/cheongna_data/2025"
+        }
+      ]
+    },
+    {
+      "id": "lake-library",
+      "name": "청라호수도서관",
+      "category": "편의시설",
+      "lat": 37.530578,
+      "lng": 126.636227,
+      "coordSource": "확인",
+      "summary": "호수 동편 수변에 있는 공공도서관입니다.",
+      "sources": [
+        {
+          "label": "인천시설공단 청라공원",
+          "url": "https://www.insiseol.or.kr/park/cheongna/facility/lake.jsp"
+        }
+      ],
+      "details": [
+        "호수공원 동쪽, 청라 더샵 레이크파크 건너편",
+        "바로 옆에 족욕장 물빛마당이 있습니다"
+      ]
+    },
+    {
+      "id": "mulbit-madang",
+      "name": "물빛마당",
+      "category": "수경시설",
+      "lat": 37.5303,
+      "lng": 126.6362,
+      "coordSource": "배치도",
+      "summary": "청라호수도서관 옆에 있는 무료 족욕장입니다.",
+      "sources": [
+        {
+          "label": "인천시설공단 청라공원",
+          "url": "https://www.insiseol.or.kr/park/cheongna/facility/lake.jsp"
+        },
+        {
+          "label": "인천시설공단 이용수칙 안내",
+          "url": "https://www.insiseol.or.kr/park/cheongna/bbs/bbsMsgDetail.do?msg_seq=36932&bcd=notice"
+        }
+      ],
+      "details": [
+        "발만 담그는 족욕 시설로 입수와 전신 이용은 금지입니다",
+        "제3주차장에서 도보 약 5분",
+        "어린이는 보호자 동반 필수",
+        "음식물, 흡연, 반려동물 출입 금지"
+      ]
+    },
+    {
+      "id": "outdoor-concert-hall",
+      "name": "야외음악당",
+      "category": "공연시설",
+      "lat": 37.528254,
+      "lng": 126.634481,
+      "coordSource": "확인",
+      "summary": "야외무대와 잔디피크닉장에서 문화공연이 열리고, 2층 카페에서 도시 경관을 볼 수 있습니다.",
+      "leafletNo": "27",
+      "sources": [
+        {
+          "label": "인천시설공단 청라공원 안내 리플렛 (공식)",
+          "url": "https://www.insiseol.or.kr/fileviewskin/doc_mobile.xhtml?fn=dosiga_pumeun_boseok_cheongragongwon_annae_ripulled(hangukeo_ver.).pdf&rs=/fileview/bbs/cheongna_data/2025"
+        },
+        {
+          "label": "인천시설공단 야외음악당",
+          "url": "https://www.insiseol.or.kr/park/cheongna/facility/outdoor.jsp"
+        }
+      ],
+      "contact": "032-456-2732 대관",
+      "details": [
+        "1층 부속시설: 커뮤니티 이야기장 63㎡, 로비와 전시·휴게공간 118㎡",
+        "세미나실 1·2 각 11㎡, 분장실 남 33㎡·여 39㎡, 연습실 75㎡",
+        "대관 신청 가능"
+      ]
+    },
+    {
+      "id": "flower-island",
+      "name": "플라워아일랜드",
+      "category": "휴게시설",
+      "lat": 37.527581,
+      "lng": 126.634617,
+      "coordSource": "확인",
+      "summary": "호수 남쪽 인공섬입니다. 야외음악당과 카페가 있습니다.",
+      "sources": [
+        {
+          "label": "인천시설공단 청라공원",
+          "url": "https://www.insiseol.or.kr/park/cheongna/facility/lake.jsp"
+        }
+      ],
+      "details": [
+        "플라워뮤직아일랜드로도 불립니다",
+        "호수 안 인공섬 두 곳 중 남측 섬",
+        "야외음악당과 카페가 섬 안에 위치"
+      ]
+    },
+    {
+      "id": "dream-forest",
+      "name": "꿈의 숲",
+      "category": "휴게시설",
+      "lat": 37.5276,
+      "lng": 126.6359,
+      "coordSource": "배치도",
+      "summary": "숲과 빛이 어우러진 휴식공간입니다.",
+      "leafletNo": "33",
+      "sources": [
+        {
+          "label": "인천시설공단 청라공원 안내 리플렛 (공식)",
+          "url": "https://www.insiseol.or.kr/fileviewskin/doc_mobile.xhtml?fn=dosiga_pumeun_boseok_cheongragongwon_annae_ripulled(hangukeo_ver.).pdf&rs=/fileview/bbs/cheongna_data/2025"
+        }
+      ]
+    },
+    {
+      "id": "fantasy-forest",
+      "name": "환상의 숲 놀이터",
+      "category": "놀이시설",
+      "lat": 37.52612,
+      "lng": 126.634066,
+      "coordSource": "확인",
+      "summary": "나무의 숲을 단순화한 파노라마 형태의 놀이터로, 여름에는 피노키오 물놀이 시설을 운영합니다.",
+      "leafletNo": "29",
+      "sources": [
+        {
+          "label": "인천시설공단 청라공원 안내 리플렛 (공식)",
+          "url": "https://www.insiseol.or.kr/fileviewskin/doc_mobile.xhtml?fn=dosiga_pumeun_boseok_cheongragongwon_annae_ripulled(hangukeo_ver.).pdf&rs=/fileview/bbs/cheongna_data/2025"
+        },
+        {
+          "label": "인천시설공단 청라공원",
+          "url": "https://www.insiseol.or.kr/park/cheongna/facility/lake.jsp"
+        }
+      ],
+      "details": [
+        "피노키오 테마 놀이대가 있어 피노키오 놀이터로도 불립니다",
+        "여름철 7~8월에는 12세 이하 어린이 물놀이터로 운영",
+        "어린이용 짚라인과 트램폴린이 인근에 있습니다",
+        "가장 가까운 주차장은 제4주차장"
+      ]
+    },
+    {
+      "id": "multi-plaza",
+      "name": "멀티프라자",
+      "category": "놀이시설",
+      "lat": 37.5265,
+      "lng": 126.6347,
+      "coordSource": "배치도",
+      "summary": "약 322m에 달하는 인라인 트랙에서 즐기는 다양한 스포츠와 이벤트 공간입니다.",
+      "leafletNo": "32",
+      "sources": [
+        {
+          "label": "인천시설공단 청라공원 안내 리플렛 (공식)",
+          "url": "https://www.insiseol.or.kr/fileviewskin/doc_mobile.xhtml?fn=dosiga_pumeun_boseok_cheongragongwon_annae_ripulled(hangukeo_ver.).pdf&rs=/fileview/bbs/cheongna_data/2025"
+        },
+        {
+          "label": "인천시설공단 청라공원",
+          "url": "https://www.insiseol.or.kr/park/cheongna/facility/lake.jsp"
+        }
+      ],
+      "details": [
+        "축구와 야구 등 구기, 인라인스케이트와 스케이트보드 이용 가능",
+        "환상의 숲 놀이터 바로 옆 공원 남서측",
+        "행사 때 부대 무대로 쓰입니다"
+      ]
+    },
+    {
+      "id": "sky-playground",
+      "name": "하늘놀이터",
+      "category": "놀이시설",
+      "lat": 37.5258,
+      "lng": 126.6341,
+      "coordSource": "배치도",
+      "summary": "공중활주로와 스파이더 놀이대, 지형 놀이대로 역동적인 활동을 즐기는 공간입니다.",
+      "leafletNo": "30",
+      "sources": [
+        {
+          "label": "인천시설공단 청라공원 안내 리플렛 (공식)",
+          "url": "https://www.insiseol.or.kr/fileviewskin/doc_mobile.xhtml?fn=dosiga_pumeun_boseok_cheongragongwon_annae_ripulled(hangukeo_ver.).pdf&rs=/fileview/bbs/cheongna_data/2025"
+        }
+      ]
+    },
+    {
+      "id": "rose-garden",
+      "name": "장미원",
+      "category": "휴게시설",
+      "lat": 37.5257,
+      "lng": 126.636,
+      "coordSource": "배치도",
+      "summary": "다채로운 품종의 장미가 조성된 테마정원입니다.",
+      "leafletNo": "28",
+      "sources": [
+        {
+          "label": "인천시설공단 청라공원 안내 리플렛 (공식)",
+          "url": "https://www.insiseol.or.kr/fileviewskin/doc_mobile.xhtml?fn=dosiga_pumeun_boseok_cheongragongwon_annae_ripulled(hangukeo_ver.).pdf&rs=/fileview/bbs/cheongna_data/2025"
+        }
+      ]
+    },
+    {
+      "id": "multi-court",
+      "name": "다목적구장·족구장",
+      "category": "놀이시설",
+      "lat": 37.5252,
+      "lng": 126.6346,
+      "coordSource": "배치도",
+      "summary": "다양한 구기종목을 즐길 수 있는 체육 활동 공간입니다.",
+      "leafletNo": "31",
+      "sources": [
+        {
+          "label": "인천시설공단 청라공원 안내 리플렛 (공식)",
+          "url": "https://www.insiseol.or.kr/fileviewskin/doc_mobile.xhtml?fn=dosiga_pumeun_boseok_cheongragongwon_annae_ripulled(hangukeo_ver.).pdf&rs=/fileview/bbs/cheongna_data/2025"
+        }
       ]
     },
     {
       "id": "loop-trail",
       "name": "순환산책로",
       "category": "산책로",
-      "lat": 37.533000,
-      "lng": 126.634500,
-      "coordSource": "추정",
+      "lat": 37.533,
+      "lng": 126.6345,
+      "coordSource": "배치도",
       "summary": "호수 전체를 한 바퀴 잇는 4.3km 산책로입니다.",
+      "sources": [
+        {
+          "label": "인천시설공단 청라공원",
+          "url": "https://www.insiseol.or.kr/park/cheongna/facility/lake.jsp"
+        }
+      ],
       "details": [
         "에코존·전통존·레저존·아트존 네 구역을 하나로 연결",
-        "조깅 도로와 자전거 도로가 함께 조성되어 있습니다",
-        "좌표는 호수 중앙부를 대표 지점으로 잡은 값입니다"
-      ],
-      "sources": [
-        { "label": "인천시설공단 청라공원", "url": "https://www.insiseol.or.kr/park/cheongna/facility/lake.jsp" }
+        "조깅 도로와 자전거 도로가 함께 조성되어 있습니다"
       ]
     },
     {
-      "id": "parking-1",
-      "name": "제1주차장",
-      "category": "주차",
-      "lat": 37.538358,
-      "lng": 126.632430,
+      "id": "canalway-mulgyeolmaru",
+      "name": "커낼웨이 물결마루",
+      "category": "수경시설",
+      "lat": 37.5331,
+      "lng": 126.6465,
       "coordSource": "추정",
-      "summary": "북서측 레이크하우스 방면 주차장입니다.",
-      "details": [
-        "청라대로 204, 레이크하우스에서 가장 가까운 주차장",
-        "주차장 번호 대응은 도로명 번호로 역산한 추정입니다"
-      ],
-      "fee": "무료",
+      "summary": "커낼웨이 지하 1층 수변의 무료 족욕장입니다. 호수공원이 아닌 문화2공원 구간에 있습니다.",
       "sources": [
-        { "label": "인천시설공단 오시는길", "url": "https://www.insiseol.or.kr/park/cheongna/introduce/location.jsp" }
+        {
+          "label": "인천시설공단 청라공원",
+          "url": "https://www.insiseol.or.kr/park/cheongna/facility/lake.jsp"
+        },
+        {
+          "label": "인천시설공단 이용수칙 안내",
+          "url": "https://www.insiseol.or.kr/park/cheongna/bbs/bbsMsgDetail.do?msg_seq=36933&bcd=notice"
+        }
+      ],
+      "details": [
+        "발만 담그는 족욕 시설로 입수와 전신 이용은 금지입니다",
+        "지상에서 지하 1층 문화2공원 커낼웨이로 내려가면 있습니다",
+        "엄밀히는 청라호수공원이 아니라 동쪽으로 이어지는 문화2공원 구간에 있습니다",
+        "어린이는 보호자 동반 필수"
       ]
     },
     {
-      "id": "parking-2",
-      "name": "제2주차장",
+      "id": "parking-p1",
+      "name": "주차장 P-1",
       "category": "주차",
-      "lat": 37.534805,
-      "lng": 126.632576,
-      "coordSource": "추정",
-      "summary": "서측 물속광장 방면 주차장입니다.",
-      "details": [
-        "물속광장과 역사광장 바닥분수 접근에 편합니다",
-        "주차장 번호 대응은 추정입니다"
-      ],
+      "lat": 37.5387,
+      "lng": 126.6327,
+      "coordSource": "배치도",
+      "summary": "서측 북쪽 주차장입니다. 무료입니다.",
       "fee": "무료",
+      "leafletNo": "P-1",
       "sources": [
-        { "label": "인천시설공단 오시는길", "url": "https://www.insiseol.or.kr/park/cheongna/introduce/location.jsp" }
+        {
+          "label": "인천시설공단 청라공원 안내 리플렛 (공식)",
+          "url": "https://www.insiseol.or.kr/fileviewskin/doc_mobile.xhtml?fn=dosiga_pumeun_boseok_cheongragongwon_annae_ripulled(hangukeo_ver.).pdf&rs=/fileview/bbs/cheongna_data/2025"
+        }
       ]
     },
     {
-      "id": "parking-3",
-      "name": "제3주차장",
+      "id": "parking-p2",
+      "name": "주차장 P-2",
       "category": "주차",
-      "lat": 37.529200,
-      "lng": 126.632600,
-      "coordSource": "추정",
-      "summary": "남서측 물빛마당 방면 주차장입니다.",
-      "details": [
-        "청라대로 88",
-        "물빛마당까지 도보 약 5분",
-        "좌표는 도로명 번호와 도보 거리로 역산한 추정값입니다"
-      ],
+      "lat": 37.5393,
+      "lng": 126.6359,
+      "coordSource": "배치도",
+      "summary": "동측 북쪽 주차장입니다. 무료입니다.",
       "fee": "무료",
+      "leafletNo": "P-2",
       "sources": [
-        { "label": "인천시설공단 이용수칙 안내", "url": "https://www.insiseol.or.kr/park/cheongna/bbs/bbsMsgDetail.do?msg_seq=36932&bcd=notice" }
+        {
+          "label": "인천시설공단 청라공원 안내 리플렛 (공식)",
+          "url": "https://www.insiseol.or.kr/fileviewskin/doc_mobile.xhtml?fn=dosiga_pumeun_boseok_cheongragongwon_annae_ripulled(hangukeo_ver.).pdf&rs=/fileview/bbs/cheongna_data/2025"
+        }
       ]
     },
     {
-      "id": "parking-4",
-      "name": "제4주차장",
+      "id": "parking-plarge",
+      "name": "주차장 P-대형",
       "category": "주차",
-      "lat": 37.525419,
-      "lng": 126.633495,
-      "coordSource": "추정",
-      "summary": "남측 환상의 숲 방면 주차장입니다.",
-      "details": [
-        "환상의 숲 놀이터와 물놀이터 방문 시 권장",
-        "주차장 번호 대응은 추정입니다"
-      ],
+      "lat": 37.5341,
+      "lng": 126.6331,
+      "coordSource": "배치도",
+      "summary": "서측 중앙 대형 주차장입니다. 무료입니다.",
       "fee": "무료",
+      "leafletNo": "P-대형",
       "sources": [
-        { "label": "인천시설공단 청라공원", "url": "https://www.insiseol.or.kr/park/cheongna/facility/lake.jsp" }
+        {
+          "label": "인천시설공단 청라공원 안내 리플렛 (공식)",
+          "url": "https://www.insiseol.or.kr/fileviewskin/doc_mobile.xhtml?fn=dosiga_pumeun_boseok_cheongragongwon_annae_ripulled(hangukeo_ver.).pdf&rs=/fileview/bbs/cheongna_data/2025"
+        }
       ]
     },
     {
-      "id": "parking-southeast",
-      "name": "남동측 주차장",
+      "id": "parking-p3",
+      "name": "주차장 P-3",
       "category": "주차",
-      "lat": 37.527862,
-      "lng": 126.636404,
-      "coordSource": "추정",
-      "summary": "야외음악당과 플라워아일랜드 방면 주차구역입니다.",
-      "details": [
-        "공식 안내에 번호가 없어 위치명으로 표기했습니다"
-      ],
+      "lat": 37.5279,
+      "lng": 126.6356,
+      "coordSource": "배치도",
+      "summary": "동측 남쪽 주차장입니다. 무료입니다.",
       "fee": "무료",
+      "leafletNo": "P-3",
       "sources": [
-        { "label": "인천시설공단 오시는길", "url": "https://www.insiseol.or.kr/park/cheongna/introduce/location.jsp" }
+        {
+          "label": "인천시설공단 청라공원 안내 리플렛 (공식)",
+          "url": "https://www.insiseol.or.kr/fileviewskin/doc_mobile.xhtml?fn=dosiga_pumeun_boseok_cheongragongwon_annae_ripulled(hangukeo_ver.).pdf&rs=/fileview/bbs/cheongna_data/2025"
+        }
       ]
     },
     {
-      "id": "parking-northeast",
-      "name": "북동측 주차장",
+      "id": "parking-p4",
+      "name": "주차장 P-4",
       "category": "주차",
-      "lat": 37.539082,
-      "lng": 126.636243,
-      "coordSource": "추정",
-      "summary": "생태축제의 섬과 청라루 방면 주차구역입니다.",
-      "details": [
-        "공식 안내에 번호가 없어 위치명으로 표기했습니다"
-      ],
+      "lat": 37.5259,
+      "lng": 126.6336,
+      "coordSource": "배치도",
+      "summary": "서측 남쪽 주차장입니다. 무료입니다.",
       "fee": "무료",
+      "leafletNo": "P-4",
       "sources": [
-        { "label": "인천시설공단 오시는길", "url": "https://www.insiseol.or.kr/park/cheongna/introduce/location.jsp" }
+        {
+          "label": "인천시설공단 청라공원 안내 리플렛 (공식)",
+          "url": "https://www.insiseol.or.kr/fileviewskin/doc_mobile.xhtml?fn=dosiga_pumeun_boseok_cheongragongwon_annae_ripulled(hangukeo_ver.).pdf&rs=/fileview/bbs/cheongna_data/2025"
+        }
+      ]
+    },
+    {
+      "id": "toilet-1",
+      "name": "화장실 (청라루·레이크하우스 인근)",
+      "category": "화장실",
+      "lat": 37.5403,
+      "lng": 126.633,
+      "coordSource": "배치도",
+      "summary": "공식 안내 리플렛 배치도에 표시된 화장실입니다.",
+      "sources": [
+        {
+          "label": "인천시설공단 청라공원 안내 리플렛 (공식)",
+          "url": "https://www.insiseol.or.kr/fileviewskin/doc_mobile.xhtml?fn=dosiga_pumeun_boseok_cheongragongwon_annae_ripulled(hangukeo_ver.).pdf&rs=/fileview/bbs/cheongna_data/2025"
+        }
+      ]
+    },
+    {
+      "id": "toilet-2",
+      "name": "화장실 (창포섬 건너편 동측)",
+      "category": "화장실",
+      "lat": 37.5401,
+      "lng": 126.6352,
+      "coordSource": "배치도",
+      "summary": "공식 안내 리플렛 배치도에 표시된 화장실입니다.",
+      "sources": [
+        {
+          "label": "인천시설공단 청라공원 안내 리플렛 (공식)",
+          "url": "https://www.insiseol.or.kr/fileviewskin/doc_mobile.xhtml?fn=dosiga_pumeun_boseok_cheongragongwon_annae_ripulled(hangukeo_ver.).pdf&rs=/fileview/bbs/cheongna_data/2025"
+        }
+      ]
+    },
+    {
+      "id": "toilet-3",
+      "name": "화장실 (P-1 주차장 인근)",
+      "category": "화장실",
+      "lat": 37.5388,
+      "lng": 126.6325,
+      "coordSource": "배치도",
+      "summary": "공식 안내 리플렛 배치도에 표시된 화장실입니다.",
+      "sources": [
+        {
+          "label": "인천시설공단 청라공원 안내 리플렛 (공식)",
+          "url": "https://www.insiseol.or.kr/fileviewskin/doc_mobile.xhtml?fn=dosiga_pumeun_boseok_cheongragongwon_annae_ripulled(hangukeo_ver.).pdf&rs=/fileview/bbs/cheongna_data/2025"
+        }
+      ]
+    },
+    {
+      "id": "toilet-4",
+      "name": "화장실 (음악분수 북측)",
+      "category": "화장실",
+      "lat": 37.5316,
+      "lng": 126.6333,
+      "coordSource": "배치도",
+      "summary": "공식 안내 리플렛 배치도에 표시된 화장실입니다.",
+      "sources": [
+        {
+          "label": "인천시설공단 청라공원 안내 리플렛 (공식)",
+          "url": "https://www.insiseol.or.kr/fileviewskin/doc_mobile.xhtml?fn=dosiga_pumeun_boseok_cheongragongwon_annae_ripulled(hangukeo_ver.).pdf&rs=/fileview/bbs/cheongna_data/2025"
+        }
+      ]
+    },
+    {
+      "id": "toilet-5",
+      "name": "화장실 (야외음악당·플라워1교 인근)",
+      "category": "화장실",
+      "lat": 37.5287,
+      "lng": 126.6341,
+      "coordSource": "배치도",
+      "summary": "공식 안내 리플렛 배치도에 표시된 화장실입니다.",
+      "sources": [
+        {
+          "label": "인천시설공단 청라공원 안내 리플렛 (공식)",
+          "url": "https://www.insiseol.or.kr/fileviewskin/doc_mobile.xhtml?fn=dosiga_pumeun_boseok_cheongragongwon_annae_ripulled(hangukeo_ver.).pdf&rs=/fileview/bbs/cheongna_data/2025"
+        }
+      ]
+    },
+    {
+      "id": "toilet-6",
+      "name": "화장실 (P-3 주차장 인근)",
+      "category": "화장실",
+      "lat": 37.5275,
+      "lng": 126.6357,
+      "coordSource": "배치도",
+      "summary": "공식 안내 리플렛 배치도에 표시된 화장실입니다.",
+      "sources": [
+        {
+          "label": "인천시설공단 청라공원 안내 리플렛 (공식)",
+          "url": "https://www.insiseol.or.kr/fileviewskin/doc_mobile.xhtml?fn=dosiga_pumeun_boseok_cheongragongwon_annae_ripulled(hangukeo_ver.).pdf&rs=/fileview/bbs/cheongna_data/2025"
+        }
+      ]
+    },
+    {
+      "id": "toilet-7",
+      "name": "화장실 (인천경제자유구역청 인근)",
+      "category": "화장실",
+      "lat": 37.5267,
+      "lng": 126.6334,
+      "coordSource": "배치도",
+      "summary": "공식 안내 리플렛 배치도에 표시된 화장실입니다.",
+      "sources": [
+        {
+          "label": "인천시설공단 청라공원 안내 리플렛 (공식)",
+          "url": "https://www.insiseol.or.kr/fileviewskin/doc_mobile.xhtml?fn=dosiga_pumeun_boseok_cheongragongwon_annae_ripulled(hangukeo_ver.).pdf&rs=/fileview/bbs/cheongna_data/2025"
+        }
       ]
     }
   ]
