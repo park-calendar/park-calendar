@@ -1,0 +1,30 @@
+{
+  "month": "2026-02",
+  "events": [
+    {
+      "title": "2026 인천 글로벌 연 축제",
+      "short": "인천 글로벌 연 축제",
+      "category": "festival",
+      "start": "2026-02-28",
+      "place": "청라호수공원 야외음악당",
+      "host": "OBS",
+      "summary": "전 연령이 함께 즐기는 시민 참여형 연(kite) 축제로, 가족 단위 체험 프로그램을 중심으로 진행되었습니다.",
+      "details": [
+        "가족 단위 참여형 연 만들기·연 날리기 체험 중심 구성",
+        "청라호수공원 야외음악당 일원에서 진행"
+      ],
+      "status": "ended",
+      "sources": [
+        {
+          "label": "청라닷컴 2026-02-15",
+          "url": "https://www.cheongna.com/server/bbs/board.php?bo_table=sub_05_03&wr_id=105"
+        },
+        {
+          "label": "네이트뉴스 2026-02-13",
+          "url": "https://m.news.nate.com/view/20260213n29409"
+        }
+      ],
+      "id": "2026-02-28-2026-인천-글로벌-연-축제"
+    }
+  ]
+}

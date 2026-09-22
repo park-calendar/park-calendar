@@ -1,0 +1,38 @@
+{
+  "month": "2026-04",
+  "events": [
+    {
+      "title": "제3회 인천과학축제 (City of Science)",
+      "short": "인천과학축제",
+      "category": "festival",
+      "start": "2026-04-17",
+      "end": "2026-04-19",
+      "place": "청라호수공원 멀티프라자",
+      "host": "인천과학문화거점센터(인천대학교)",
+      "summary": "'일상에서 만나고, 문화로 이어지는 과학'을 주제로 체험 부스 40여 개와 공연·강연·전시를 운영한 가족형 과학문화축제입니다.",
+      "details": [
+        "체험 부스 약 40개: 일상 속 과학, 인재 양성, 미래전략산업, 해양·생태, 역사·예술 융합",
+        "드론축구, 자율주행차 시연, 로봇 체험, AI 기반 프로그램, 환경·에너지 체험",
+        "버스 속 과학 방탈출, 드론 조종 경기, 범퍼카 등 특별 프로그램",
+        "3일간 시민 18,162명 참여로 성료"
+      ],
+      "fee": "무료",
+      "status": "ended",
+      "sources": [
+        {
+          "label": "인천투데이 2026-04",
+          "url": "https://www.incheontoday.com/news/articleView.html?idxno=317243"
+        },
+        {
+          "label": "제3회 인천과학축제 공식 홈페이지",
+          "url": "https://cosincheon.com/"
+        },
+        {
+          "label": "청라닷컴 2026-04-03",
+          "url": "https://www.cheongna.com/server/bbs/board.php?bo_table=sub_05_03&wr_id=106"
+        }
+      ],
+      "id": "2026-04-17-제3회-인천과학축제-city-of-science"
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "month": "2026-05",
+  "events": [
+    {
+      "id": "fountain-2026",
+      "title": "청라호수공원 음악분수 2026 시즌 운영",
+      "short": "음악분수 운영 (화~일 낮 · 금~일 밤)",
+      "category": "regular",
+      "start": "2026-05-01",
+      "end": "2026-10-04",
+      "time": "주간 화~일 12:20~13:00 · 야간 금~일 20:00~약 1시간",
+      "place": "청라호수공원 음악분수 (길이 120m, 최대 높이 75m)",
+      "host": "인천경제자유구역청 · 인천시설공단 청라공원사업단",
+      "summary": "5월 1일부터 10월 4일까지 운영. 야간에는 음악·조명·레이저·영상이 결합된 물빛 쇼.",
+      "details": [
+        "운영기간: 2026-05-01 ~ 2026-10-04",
+        "주간 공연: 화요일~일요일 12:20~13:00 (월요일 휴무)",
+        "야간 공연: 금요일~일요일 20:00 시작, 약 1시간",
+        "기상 상황·시설 점검에 따라 변동될 수 있음"
+      ],
+      "fee": "무료",
+      "contact": "음악분수 문의 032-456-2752~7",
+      "sources": [
+        {
+          "label": "인천시설공단 청라공원 – 음악분수",
+          "url": "https://www.insiseol.or.kr/park/cheongna/facility/music.jsp"
+        },
+        {
+          "label": "뉴스핌 2026-04-28",
+          "url": "https://www.newspim.com/news/view/20260428000780"
+        },
+        {
+          "label": "인천투데이 2026-04",
+          "url": "https://www.incheontoday.com/news/articleView.html?idxno=318261"
+        }
+      ]
+    },
+    {
+      "title": "제3회 서구청소년시설 연합축제 'NOW'",
+      "short": "청소년축제 NOW",
+      "category": "festival",
+      "start": "2026-05-09",
+      "time": "1부 11:00~14:40",
+      "place": "청라호수공원 야외음악당 및 광장",
+      "host": "인천 서구",
+      "summary": "'지금 이 순간, 우리가 주인공!'을 슬로건으로 청소년 동아리 공연과 체험 부스를 운영한 서구 청소년시설 연합축제입니다.",
+      "details": [
+        "1부 청소년 동아리 자유공연 — 서구 및 인천 지역 학교·기관 동아리 11개 팀 참여(댄스·밴드 등)",
+        "2부 진로·직업 체험을 포함한 테마별 체험부스 53개 운영",
+        "먹거리 부스 11종 및 푸드트럭 운영"
+      ],
+      "fee": "무료",
+      "status": "ended",
+      "sources": [
+        {
+          "label": "경기일보 2026-05-07",
+          "url": "https://www.kyeonggi.com/article/20260507580271"
+        },
+        {
+          "label": "일간투데이 2026-05",
+          "url": "https://www.dtoday.co.kr/news/articleView.html?idxno=769559"
+        },
+        {
+          "label": "청라닷컴 2026-05-08",
+          "url": "https://www.cheongna.com/server/bbs/board.php?bo_table=sub_05_03&wr_id=110"
+        }
+      ],
+      "id": "2026-05-09-제3회-서구청소년시설-연합축제-now"
+    }
+  ]
+}

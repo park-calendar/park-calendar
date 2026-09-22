@@ -85,14 +85,27 @@ def main():
         ids = ', '.join(p['id'] for p in config.get('parks', []))
         print(f'ERROR: 알 수 없는 공원 "{park_id}". 등록된 공원: {ids}'); sys.exit(1)
 
+    park_dir = os.path.join(DATA, park_id)
+    # 기존 행사가 어느 월 파일에 있는지 미리 색인한다 (시작일이 다른 달로 바뀌는 경우를 처리)
+    index = {}          # id -> month
+    tindex = {}         # (정규화 제목, start) -> month
+    if os.path.isdir(park_dir):
+        for fn in sorted(os.listdir(park_dir)):
+            if not fn.endswith('.json'):
+                continue
+            mm = fn[:-5]
+            for x in (load(os.path.join(park_dir, fn), {}) or {}).get('events', []):
+                if x.get('id'):
+                    index[x['id']] = mm
+                tindex[(norm_title(x.get('title')), x.get('start'))] = mm
+
     raw = sys.stdin.read() if args[0] == '-' else open(args[0], encoding='utf-8').read()
     payload = json.loads(raw)
     new_events = payload if isinstance(payload, list) else payload.get('events', [])
     new_notes = {} if isinstance(payload, list) else (payload.get('monthNotes') or {})
 
     cats = set(config.get('categories', {}).keys())
-    park_dir = os.path.join(DATA, park_id)
-    added, updated, skipped, notes_msg = [], [], [], []
+    added, updated, skipped, notes_msg, moved = [], [], [], [], []
     touched = {}
 
     for e in new_events:
@@ -112,12 +125,29 @@ def main():
         if not e.get('id'):
             e['id'] = e['start'] + '-' + slug(e['title'])
 
-        path = os.path.join(park_dir, month + '.json')
-        if month not in touched:
-            touched[month] = load(path, {'month': month, 'events': []})
-        events = touched[month]['events']
+        def open_month(mm):
+            if mm not in touched:
+                touched[mm] = load(os.path.join(park_dir, mm + '.json'), {'month': mm, 'events': []})
+            return touched[mm]['events']
 
-        match = next((x for x in events if x.get('id') == e['id']), None) or \
+        events = open_month(month)
+
+        # 같은 행사가 다른 달 파일에 있으면 그쪽에서 떼어내 이 달로 옮긴다
+        prev_month = index.get(e['id']) or tindex.get((norm_title(e['title']), e['start']))
+        carried = None
+        if prev_month and prev_month != month:
+            src = open_month(prev_month)
+            for i, x in enumerate(src):
+                same = x.get('id') == e['id'] or (norm_title(x.get('title')) == norm_title(e['title'])
+                                                  and x.get('start') == e['start'])
+                if same:
+                    carried = src.pop(i)
+                    break
+            if carried is not None:
+                events.append(carried)
+                moved.append(f"{carried.get('title')} ({prev_month} → {month})")
+
+        match = carried or next((x for x in events if x.get('id') == e['id']), None) or \
                 next((x for x in events if norm_title(x.get('title')) == norm_title(e['title'])
                       and x.get('start') == e['start']), None)
         if match:
@@ -125,11 +155,12 @@ def main():
             for k, v in e.items():
                 if v not in (None, '', [], {}):
                     match[k] = v
-            if json.dumps(match, ensure_ascii=False, sort_keys=True) != before:
+            if json.dumps(match, ensure_ascii=False, sort_keys=True) != before and carried is None:
                 updated.append(match['title'])
         else:
             events.append(e); added.append(e['title'])
         events.sort(key=lambda x: (x['start'], x.get('time') or ''))
+        index[e['id']] = month
 
     for k, v in new_notes.items():
         if not MONTH_RE.match(k):
@@ -138,7 +169,7 @@ def main():
         if park['monthNotes'].get(k) != v:
             park['monthNotes'][k] = v; updated.append(f'monthNotes[{k}]')
 
-    changed = bool(added or updated or notes_msg)
+    changed = bool(added or updated or moved or notes_msg)
     if changed and not dry:
         for month, data in touched.items():
             save(os.path.join(park_dir, month + '.json'), data)
@@ -152,6 +183,7 @@ def main():
 
     print(f"[{park['name']}] 추가 {len(added)}건: " + (', '.join(added) or '-'))
     print(f"[{park['name']}] 갱신 {len(updated)}건: " + (', '.join(updated) or '-'))
+    if moved: print(f"[{park['name']}] 월 이동 {len(moved)}건: " + ', '.join(moved))
     for m in notes_msg: print('안내: ' + m)
     for t, why in skipped: print(f"건너뜀: {t} — {why}")
     if dry: print('(dry-run: 파일을 쓰지 않았습니다)')
