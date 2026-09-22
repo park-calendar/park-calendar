@@ -57,6 +57,19 @@ data/2026-09.json
 출처 없는 행사는 추가하지 않습니다. 호수공원 밖 행사는 category "nearby" 로만 넣습니다.
 ```
 
+## 알려진 함정: PutObject AccessDenied
+
+AWS CLI 2.23+ / boto3 1.36+ 는 업로드마다 CRC32 무결성 체크섬을 기본으로 붙이는데, NCP Object Storage 는 이를 지원하지 않고 **AccessDenied** 로 응답한다. 권한 문제로 오인하기 쉽다.
+판별법: `copy-object` 는 되는데 `put-object` 만 AccessDenied 면 이 문제다 (복사도 쓰기 작업이므로 권한은 정상).
+해결: 아래 설정 중 하나. 저장소의 배포 스크립트에는 이미 적용되어 있다.
+```bash
+aws configure set request_checksum_calculation when_required --profile ncp
+aws configure set response_checksum_validation when_required --profile ncp
+# 또는 환경변수
+export AWS_REQUEST_CHECKSUM_CALCULATION=when_required
+export AWS_RESPONSE_CHECKSUM_VALIDATION=when_required
+```
+
 ## NCP Object Storage 설정 체크리스트
 
 - 버킷 생성 시 **암호화 설정 안 함** (암호화 버킷은 정적 웹사이트 호스팅 불가)

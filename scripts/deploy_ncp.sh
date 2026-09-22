@@ -14,6 +14,11 @@
 #
 set -euo pipefail
 
+# NCP Object Storage 는 AWS CLI/ SDK 가 기본으로 붙이는 CRC32 무결성 체크섬을 거부하고
+# AccessDenied 를 돌려준다. 아래 두 변수로 체크섬을 필요한 경우에만 계산하도록 낮춘다.
+export AWS_REQUEST_CHECKSUM_CALCULATION="${AWS_REQUEST_CHECKSUM_CALCULATION:-when_required}"
+export AWS_RESPONSE_CHECKSUM_VALIDATION="${AWS_RESPONSE_CHECKSUM_VALIDATION:-when_required}"
+
 BUCKET="${NCP_BUCKET:?NCP_BUCKET 환경변수에 버킷 이름을 넣어주세요}"
 PROFILE="${NCP_PROFILE:-ncp}"
 ENDPOINT="${NCP_ENDPOINT:-https://kr.object.ncloudstorage.com}"

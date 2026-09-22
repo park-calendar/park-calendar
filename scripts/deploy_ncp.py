@@ -27,13 +27,19 @@ REGION = os.environ.get("NCP_REGION", "kr-standard")
 
 
 def client():
+    # NCP 는 AWS SDK 기본 CRC32 체크섬을 거부하고 AccessDenied 를 반환한다.
+    os.environ.setdefault("AWS_REQUEST_CHECKSUM_CALCULATION", "when_required")
+    os.environ.setdefault("AWS_RESPONSE_CHECKSUM_VALIDATION", "when_required")
     ak = os.environ.get("NCP_ACCESS_KEY") or os.environ.get("AWS_ACCESS_KEY_ID")
     sk = os.environ.get("NCP_SECRET_KEY") or os.environ.get("AWS_SECRET_ACCESS_KEY")
     if ak and sk:
         session = boto3.session.Session(aws_access_key_id=ak, aws_secret_access_key=sk, region_name=REGION)
     else:
         session = boto3.session.Session(profile_name=os.environ.get("NCP_PROFILE", "ncp"), region_name=REGION)
-    return session.client("s3", endpoint_url=ENDPOINT, config=Config(signature_version="s3v4"))
+    cfg = Config(signature_version="s3v4",
+                 request_checksum_calculation="when_required",
+                 response_checksum_validation="when_required")
+    return session.client("s3", endpoint_url=ENDPOINT, config=cfg)
 
 
 def md5(path):
