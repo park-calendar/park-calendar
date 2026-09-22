@@ -11,7 +11,7 @@
 | `.claude/settings.json` | 루틴이 승인 없이 돌도록 하는 권한 규칙 |
 | `scripts/merge_events.py` | 새 행사 JSON 을 월 파일에 병합(중복 제거·갱신) |
 | `scripts/new_events.sample.json` | 루틴이 만들어야 하는 입력 형식 예시 |
-| `scripts/deploy_ncp.sh` | NCP 업로드, AWS CLI 사용 (`NCP_BUCKET=버킷 ./scripts/deploy_ncp.sh`) |
+| `scripts/deploy_ncp.sh` | NCP 업로드 (예비 수단, 현재 미사용) |
 | `scripts/deploy_ncp.py` | NCP 업로드·내려받기, boto3 사용 (클라우드 루틴용) |
 | `ROUTINE.md` | 일일 조사 루틴 절차와 NCP 설정 체크리스트 |
 
@@ -29,10 +29,14 @@ python3 -m http.server 8765
 
 행사 필드: `id`(생략 시 자동), `title`, `short`, `category`(festival·concert·sports·facility·regular·nearby), `start`, `end`, `time`, `place`, `host`, `summary`, `details[]`, `fee`, `contact`, `status`(confirmed·tentative·ended), `sources[{label,url}]`, `note`.
 
-## NCP Object Storage 배포
-1. 콘솔에서 버킷 생성(암호화 없음) → 권한 관리 전체 공개 → 정적 웹 사이트 호스팅(인덱스 `index.html`)
-2. 인증키 등록: `aws configure --profile ncp` (리전 `kr-standard`)
-3. 업로드: `NCP_BUCKET=pjs ./scripts/deploy_ncp.sh`
-4. 데이터만 갱신할 때: `NCP_BUCKET=pjs ./scripts/deploy_ncp.sh data`
+## 배포
 
-현재 배포 주소: http://pjs.s3-website.kr.object.ncloudstorage.com
+GitHub Pages 로 서비스합니다. `main` 브랜치에 푸시하면 1분 안에 반영됩니다.
+
+```bash
+git add data/ && git commit -m "행사 일정 갱신" && git push origin main
+```
+
+주소: https://park-calendar.github.io/park-calendar/
+
+NCP Object Storage 로도 올릴 수 있습니다(`scripts/deploy_ncp.sh`). 현재는 쓰지 않습니다.

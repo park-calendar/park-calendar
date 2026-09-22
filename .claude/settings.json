@@ -34,8 +34,6 @@
       "Bash(sudo *)",
       "Bash(rm -rf *)",
       "Bash(aws *)",
-      "Bash(git push *)",
-      "Bash(gh *)",
       "Bash(ssh *)",
       "Bash(scp *)",
       "Edit(index.html)",
