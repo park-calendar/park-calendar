@@ -25,21 +25,25 @@ data/songdo/2026-09.json       송도 센트럴파크 9월 행사 ← 루틴이 
 
 ## 실행 주체
 
-매일 오전 8시(KST)에 **Claude 클라우드 루틴**이 실행합니다. GitHub 저장소를 쓰지 않고, 버킷의 `_tools/` 에 올려둔 스크립트를 내려받아 동작합니다.
+매일 오전 8시(KST)에 **이 Mac의 예약 작업**(`【매일 08:00】인천 공원 행사 업데이트`)이 실행합니다.
+Claude 데스크톱 앱이 켜져 있어야 하며, 꺼져 있었다면 다음 실행 시 수행됩니다.
 
-- 루틴: https://claude.ai/code/routines/trig_011AweBj5m3h2JWyJ6SnZjJB
-- 환경: `NCP` (환경변수 `NCP_ACCESS_KEY`, `NCP_SECRET_KEY`)
-- cron `0 23 * * *` (UTC) = 매일 08:00 KST
-- 모델: Opus 5 (연도 오판을 줄이기 위해 정확도 우선)
+### 클라우드 루틴을 쓰지 못하는 이유
 
-`scripts/merge_events.py` 나 `scripts/deploy_ncp.py` 를 고쳤다면 버킷의 `_tools/` 사본도 갱신해야 루틴에 반영됩니다.
+클라우드 루틴 `trig_011AweBj5m3h2JWyJ6SnZjJB` 을 만들어 두었으나 **비활성** 상태입니다.
+Claude 클라우드 샌드박스의 egress 프록시가 조직 정책으로 `kr.object.ncloudstorage.com` 을 차단합니다
+(`connect_rejected`). 그래서 클라우드에서는 버킷을 읽지도 쓰지도 못합니다.
+아래가 해결되면 루틴을 켜서 쓸 수 있습니다.
+
+1. 환경 `NCP` 의 egress 허용 목록에 `kr.object.ncloudstorage.com` 추가 (조직 관리자 권한 필요할 수 있음)
+2. 허용 후 루틴을 활성화하고, 중복 방지를 위해 로컬 예약 작업을 끈다
+
+클라우드용 스크립트 사본은 이미 버킷 `_tools/` 에 올려 두었습니다. 스크립트를 고치면 사본도 갱신해야 합니다.
 ```bash
 aws --profile ncp --endpoint-url https://kr.object.ncloudstorage.com \
   s3 cp scripts/merge_events.py s3://pjs.test/_tools/merge_events.py \
   --acl public-read --content-type "text/x-python; charset=utf-8" --cache-control no-cache
 ```
-
-로컬 예약 작업(`【매일 08:00】인천 공원 행사 업데이트`)은 중복 실행을 막기 위해 꺼져 있습니다. 클라우드 루틴이 계속 실패할 때만 다시 켜세요.
 
 ## 루틴 1회 실행 순서
 
