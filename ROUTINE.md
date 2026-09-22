@@ -23,6 +23,24 @@ data/songdo/2026-09.json       송도 센트럴파크 9월 행사 ← 루틴이 
 | `cheongna` | 청라호수공원 | 인천 서구 청라국제도시 |
 | `songdo` | 송도 센트럴파크 | 인천 연수구 송도국제도시 |
 
+## 실행 주체
+
+매일 오전 8시(KST)에 **Claude 클라우드 루틴**이 실행합니다. GitHub 저장소를 쓰지 않고, 버킷의 `_tools/` 에 올려둔 스크립트를 내려받아 동작합니다.
+
+- 루틴: https://claude.ai/code/routines/trig_011AweBj5m3h2JWyJ6SnZjJB
+- 환경: `NCP` (환경변수 `NCP_ACCESS_KEY`, `NCP_SECRET_KEY`)
+- cron `0 23 * * *` (UTC) = 매일 08:00 KST
+- 모델: Opus 5 (연도 오판을 줄이기 위해 정확도 우선)
+
+`scripts/merge_events.py` 나 `scripts/deploy_ncp.py` 를 고쳤다면 버킷의 `_tools/` 사본도 갱신해야 루틴에 반영됩니다.
+```bash
+aws --profile ncp --endpoint-url https://kr.object.ncloudstorage.com \
+  s3 cp scripts/merge_events.py s3://pjs.test/_tools/merge_events.py \
+  --acl public-read --content-type "text/x-python; charset=utf-8" --cache-control no-cache
+```
+
+로컬 예약 작업(`【매일 08:00】인천 공원 행사 업데이트`)은 중복 실행을 막기 위해 꺼져 있습니다. 클라우드 루틴이 계속 실패할 때만 다시 켜세요.
+
 ## 루틴 1회 실행 순서
 
 1. **현재 데이터 내려받기**
