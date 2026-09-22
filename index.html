@@ -378,12 +378,9 @@ function init(CONFIG) {
   const todayStr = ymd(new Date());
   const thisMonth = todayStr.slice(0, 7);
 
+  // 기본은 항상 목록의 첫 공원(청라호수공원). ?park=songdo 처럼 지정하면 그 공원으로 연다.
   const params = new URLSearchParams(location.search);
-  let saved = null;
-  try { saved = localStorage.getItem('park'); } catch (e) { /* 차단된 환경 */ }
-  let park = CONFIG.parks.find((p) => p.id === params.get('park'))
-          || CONFIG.parks.find((p) => p.id === saved)
-          || CONFIG.parks[0];
+  let park = CONFIG.parks.find((p) => p.id === params.get('park')) || CONFIG.parks[0];
 
   let cache = new Map();   // "YYYY-MM" -> 행사 배열 (없는 달은 빈 배열)
   let current = thisMonth;
@@ -536,7 +533,6 @@ function init(CONFIG) {
   async function selectPark(p) {
     park = p;
     cache = new Map();
-    try { localStorage.setItem('park', p.id); } catch (e) { /* 무시 */ }
     const url = new URL(location.href); url.searchParams.set('park', p.id);
     history.replaceState(null, '', url);
     $('#parkName').textContent = p.name;
