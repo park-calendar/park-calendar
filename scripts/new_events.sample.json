@@ -1,24 +1,25 @@
 {
+  "_설명": "공원 하나당 이 형식의 파일 하나. python3 scripts/merge_events.py --park <공원id> <이파일> 로 병합합니다.",
   "events": [
     {
       "title": "행사명 (예시)",
-      "short": "달력 칩용 짧은 이름 (선택)",
+      "short": "달력 칩용 짧은 이름 (선택, 15자 내외)",
       "category": "festival",
-      "start": "2026-11-07",
-      "end": "2026-11-08",
+      "start": "2027-01-10",
+      "end": "2027-01-11",
       "time": "14:00~20:00",
-      "place": "청라호수공원 야외음악당",
+      "place": "정확한 장소 (예: 송도 센트럴파크 잔디광장)",
       "host": "주최/주관",
       "summary": "한 줄 요약",
       "details": ["세부 항목 1", "세부 항목 2"],
       "fee": "무료",
       "contact": "032-000-0000",
       "status": "tentative",
-      "sources": [{ "label": "출처명 YYYY-MM-DD", "url": "https://example.com/article" }],
+      "sources": [{ "label": "매체명 2026-12-01", "url": "https://example.com/article" }],
       "note": "비고"
     }
   ],
   "monthNotes": {
-    "2026-11": "11월 행사 안내 문구 (선택, 없으면 생략)"
+    "2027-01": "해당 월에 확인된 행사가 없을 때만 그 사실을 적습니다. 행사가 있으면 이 키를 넣지 마세요."
   }
 }

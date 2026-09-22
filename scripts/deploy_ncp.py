@@ -64,17 +64,30 @@ def put(s3, bucket, local, key, ctype, force=False):
 
 
 def pull(s3, bucket):
-    os.makedirs(os.path.join(ROOT, "data"), exist_ok=True)
-    resp = s3.list_objects_v2(Bucket=bucket, Prefix="data/")
+    paginator = s3.get_paginator("list_objects_v2")
     n = 0
-    for obj in resp.get("Contents", []):
-        key = obj["Key"]
-        if not key.endswith(".json"):
-            continue
-        local = os.path.join(ROOT, key)
-        s3.download_file(bucket, key, local); n += 1
-        print(f"  ↓ {key}")
+    for page in paginator.paginate(Bucket=bucket, Prefix="data/"):
+        for obj in page.get("Contents", []):
+            key = obj["Key"]
+            if not key.endswith(".json"):
+                continue
+            local = os.path.join(ROOT, key)
+            os.makedirs(os.path.dirname(local), exist_ok=True)
+            s3.download_file(bucket, key, local); n += 1
+            print(f"  ↓ {key}")
     print(f"내려받기 완료: {n}개")
+
+
+def walk_data():
+    """data/ 아래 모든 .json 을 (로컬경로, 버킷키) 로 돌려준다."""
+    base = os.path.join(ROOT, "data")
+    for dirpath, _dirs, files in os.walk(base):
+        for name in sorted(files):
+            if not name.endswith(".json"):
+                continue
+            local = os.path.join(dirpath, name)
+            key = os.path.relpath(local, ROOT).replace(os.sep, "/")
+            yield local, key
 
 
 def main():
@@ -90,10 +103,8 @@ def main():
     if a.mode == "pull":
         pull(s3, a.bucket); return
     changed = 0
-    data_dir = os.path.join(ROOT, "data")
-    for name in sorted(os.listdir(data_dir)):
-        if name.endswith(".json"):
-            changed += put(s3, a.bucket, os.path.join(data_dir, name), f"data/{name}", "application/json; charset=utf-8", a.force)
+    for local, key in sorted(walk_data(), key=lambda t: t[1]):
+        changed += put(s3, a.bucket, local, key, "application/json; charset=utf-8", a.force)
     if a.mode == "all":
         changed += put(s3, a.bucket, os.path.join(ROOT, "index.html"), "index.html", "text/html; charset=utf-8", a.force)
     print(f"✔ 완료: {changed}개 업로드")

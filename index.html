@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>청라호수공원 행사 달력</title>
-<meta name="description" content="인천 청라호수공원 행사 일정 달력. data/ 폴더의 월별 JSON 을 갱신하면 자동 반영됩니다.">
+<title>인천 공원 행사 달력</title>
+<meta name="description" content="인천 주요 공원의 행사 일정을 달력으로 확인합니다.">
 <style>
   :root {
     --bg: #f4f5f7;
@@ -45,8 +45,29 @@
   .wrap { max-width: 1100px; margin: 0 auto; }
 
   header { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 8px 16px; margin-bottom: 14px; }
-  header h1 { font-size: 22px; margin: 0; letter-spacing: -.01em; }
-  header h1 small { display: block; font-size: 13px; font-weight: 500; color: var(--muted); margin-top: 2px; }
+  .titlebox { position: relative; }
+  .park-btn {
+    display: inline-flex; align-items: center; gap: 8px; background: none; border: none; padding: 0;
+    font-family: inherit; font-size: 22px; font-weight: 700; color: var(--text); cursor: pointer;
+    letter-spacing: -.01em; border-radius: 6px;
+  }
+  .park-btn:hover { color: var(--accent); }
+  .park-btn .caret { font-size: 14px; color: var(--muted); }
+  .park-btn:hover .caret { color: var(--accent); }
+  .loc { font-size: 13px; color: var(--muted); margin-top: 2px; }
+  .park-menu {
+    position: absolute; top: calc(100% + 8px); left: 0; z-index: 40; min-width: 240px;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+    box-shadow: var(--shadow); padding: 6px; display: flex; flex-direction: column; gap: 2px;
+  }
+  .park-menu[hidden] { display: none; }
+  .park-menu button {
+    text-align: left; background: none; border: none; border-radius: 7px; padding: 9px 12px;
+    font-family: inherit; font-size: 14.5px; color: var(--text); cursor: pointer; line-height: 1.35;
+  }
+  .park-menu button:hover { background: var(--surface-2); }
+  .park-menu button.active { background: var(--accent); color: #fff; }
+  .park-menu button .sub { display: block; font-size: 12px; opacity: .7; margin-top: 1px; }
   .updated { font-size: 13px; color: var(--muted); }
   .updated b { color: var(--text); font-weight: 600; }
 
@@ -57,6 +78,7 @@
     border-radius: 8px; padding: 6px 12px; font-size: 14px; cursor: pointer;
   }
   .months button.active { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
+  .months .loading { font-size: 13px; color: var(--muted); padding: 6px 2px; }
   .nav { display: flex; gap: 4px; margin-left: auto; }
   .nav button:disabled { opacity: .4; cursor: default; }
   .view-toggle button.active { background: var(--surface-2); font-weight: 600; }
@@ -70,6 +92,7 @@
   .filters .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
   .filters input { display: none; }
 
+  .month-note[hidden] { display: none; }
   .month-note {
     background: var(--surface); border: 1px dashed var(--border); border-left: 4px solid var(--today-border);
     border-radius: 8px; padding: 10px 12px; font-size: 13px; color: var(--muted); margin-bottom: 12px;
@@ -170,9 +193,13 @@
 <body>
 <div class="wrap">
   <header>
-    <h1>청라호수공원 행사 달력
-      <small>인천 서해구 청라국제도시 · 2026년 8월 ~ 12월</small>
-    </h1>
+    <div class="titlebox">
+      <button class="park-btn" id="parkBtn" type="button" aria-haspopup="listbox" aria-expanded="false">
+        <span id="parkName">행사 달력</span><span class="caret" aria-hidden="true">▾</span>
+      </button>
+      <div class="park-menu" id="parkMenu" role="listbox" hidden></div>
+      <div class="loc" id="parkLoc"></div>
+    </div>
     <div class="updated" id="updated"></div>
   </header>
 
@@ -202,10 +229,6 @@
 
   <div class="list" id="list"></div>
 
-  <footer>
-    데이터: <code>data/config.json</code> + 월별 <code>data/YYYY-MM.json</code>. 월 파일에 행사를 추가하고 새로 고치면 달력에 반영됩니다.
-    날짜 칸 또는 행사 칩을 클릭하면 상세 내용이 표시됩니다. 취소선은 이미 종료된 행사입니다.
-  </footer>
 </div>
 
 <div class="overlay" id="overlay" role="dialog" aria-modal="true">
@@ -224,27 +247,37 @@
 <script>
 const DATA_DIR = 'data/';   // config.json 과 YYYY-MM.json 이 있는 경로 (Object Storage 도 같은 구조)
 
-async function loadData() {
-  const bust = '?t=' + Date.now();
-  const res = await fetch(DATA_DIR + 'config.json' + bust, { cache: 'no-store' });
+function monthList(range) {
+  const out = [];
+  let [y, m] = range.start.split('-').map(Number);
+  const [ey, em] = range.end.split('-').map(Number);
+  while (y < ey || (y === ey && m <= em)) { out.push(y + '-' + String(m).padStart(2, '0')); m++; if (m > 12) { m = 1; y++; } }
+  return out;
+}
+
+async function loadConfig() {
+  const res = await fetch(DATA_DIR + 'config.json?t=' + Date.now(), { cache: 'no-store' });
   if (!res.ok) throw new Error('config.json HTTP ' + res.status);
   const config = await res.json();
-  const months = [];
-  let [y, m] = config.range.start.split('-').map(Number);
-  const [ey, em] = config.range.end.split('-').map(Number);
-  while (y < ey || (y === ey && m <= em)) { months.push(y + '-' + String(m).padStart(2, '0')); m++; if (m > 12) { m = 1; y++; } }
+  if (!Array.isArray(config.parks) || !config.parks.length) throw new Error('config.json 에 parks 가 없습니다');
+  return config;
+}
+
+async function loadPark(park) {
+  const bust = '?t=' + Date.now();
+  const months = monthList(park.range);
   const files = await Promise.all(months.map(async (mm) => {
     try {
-      const r = await fetch(DATA_DIR + mm + '.json' + bust, { cache: 'no-store' });
+      const r = await fetch(DATA_DIR + park.id + '/' + mm + '.json' + bust, { cache: 'no-store' });
       if (!r.ok) return [];                       // 파일이 없는 달은 빈 달로 처리
       const j = await r.json();
       return Array.isArray(j.events) ? j.events : [];
     } catch (e) { return []; }
   }));
-  return { ...config, months, events: files.flat() };
+  return { months, events: files.flat() };
 }
 
-loadData().then(init).catch((err) => {
+loadConfig().then(init).catch((err) => {
   const isFile = location.protocol === 'file:';
   document.querySelector('#error').innerHTML = '<div class="error"><b>데이터를 불러오지 못했습니다.</b> (' + String(err.message || err).replace(/[<>]/g, '') + ')<br>' +
     (isFile
@@ -252,27 +285,35 @@ loadData().then(init).catch((err) => {
       : '<code>data/config.json</code> 과 <code>data/YYYY-MM.json</code> 파일이 index.html 과 같은 위치에 있는지 확인하세요.') + '</div>';
 });
 
-function init(DATA) {
+function init(CONFIG) {
   const $ = (s) => document.querySelector(s);
   const WEEK = ['일', '월', '화', '수', '목', '금', '토'];
 
-  const cats = DATA.categories || {};
+  const cats = CONFIG.categories || {};
   const enabled = new Set(Object.keys(cats));
   const pad = (n) => String(n).padStart(2, '0');
   const ymd = (d) => d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
   const parse = (s) => { const [y, m, d] = s.split('-').map(Number); return new Date(y, m - 1, d); };
   const todayStr = ymd(new Date());
 
-  const months = DATA.months;
-  let current = months.includes(todayStr.slice(0, 7)) ? todayStr.slice(0, 7) : months[0];
+  // ---- park state (URL ?park= 또는 저장값 또는 첫 번째) ----
+  const params = new URLSearchParams(location.search);
+  let saved = null;
+  try { saved = localStorage.getItem('park'); } catch (e) { /* 차단된 환경 */ }
+  let park = CONFIG.parks.find((p) => p.id === params.get('park'))
+          || CONFIG.parks.find((p) => p.id === saved)
+          || CONFIG.parks[0];
 
-  // normalize events
-  const seen = new Set();
-  const events = DATA.events.filter((e) => e && e.id && !seen.has(e.id) && seen.add(e.id)).map((e) => ({
-    ...e,
-    end: e.end || e.start,
-    status: e.status || (((e.end || e.start) < todayStr) ? 'ended' : 'confirmed'),
-  }));
+  let months = [], events = [], current = null;
+
+  function normalize(list) {
+    const seen = new Set();
+    return list.filter((e) => e && e.id && !seen.has(e.id) && seen.add(e.id)).map((e) => ({
+      ...e,
+      end: e.end || e.start,
+      status: e.status || (((e.end || e.start) < todayStr) ? 'ended' : 'confirmed'),
+    }));
+  }
   const color = (e) => (cats[e.category] && cats[e.category].color) || '#666';
   const label = (e) => (cats[e.category] && cats[e.category].label) || e.category || '';
   const onDay = (e, day) => e.start <= day && day <= e.end;
@@ -281,18 +322,57 @@ function init(DATA) {
   const eventsOn = (day) => events.filter((e) => visible(e) && onDay(e, day))
     .sort((a, b) => (isRange(a) - isRange(b)) || (a.time || '').localeCompare(b.time || ''));
 
-  $('#updated').innerHTML = '최종 업데이트 <b>' + (DATA.updatedAt || '-') + '</b>';
+  $('#updated').innerHTML = '최종 업데이트 <b>' + (CONFIG.updatedAt || '-') + '</b>';
 
-  // month tabs
-  const monthsEl = $('#months');
-  months.forEach((m) => {
+  // ---- park picker ----
+  const parkBtn = $('#parkBtn'), parkMenu = $('#parkMenu');
+  CONFIG.parks.forEach((p) => {
     const b = document.createElement('button');
-    b.type = 'button'; b.textContent = Number(m.slice(5)) + '월'; b.dataset.m = m;
-    b.onclick = () => { current = m; render(); };
-    monthsEl.appendChild(b);
+    b.type = 'button'; b.dataset.id = p.id; b.setAttribute('role', 'option');
+    b.innerHTML = esc(p.name) + (p.location ? '<span class="sub">' + esc(p.location) + '</span>' : '');
+    b.onclick = () => { closeMenu(); if (p.id !== park.id) selectPark(p); };
+    parkMenu.appendChild(b);
   });
+  function openMenu() {
+    parkMenu.querySelectorAll('button').forEach((b) => b.classList.toggle('active', b.dataset.id === park.id));
+    parkMenu.hidden = false; parkBtn.setAttribute('aria-expanded', 'true');
+  }
+  function closeMenu() { parkMenu.hidden = true; parkBtn.setAttribute('aria-expanded', 'false'); }
+  parkBtn.onclick = (ev) => { ev.stopPropagation(); parkMenu.hidden ? openMenu() : closeMenu(); };
+  document.addEventListener('click', closeMenu);
+  document.addEventListener('keydown', (ev) => { if (ev.key === 'Escape') closeMenu(); });
+
+  const monthsEl = $('#months');
+  function buildMonthTabs() {
+    monthsEl.innerHTML = '';
+    months.forEach((m) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.textContent = (m.slice(0, 4) !== String(new Date().getFullYear()) ? m.slice(2, 4) + '. ' : '') + Number(m.slice(5)) + '월';
+      b.dataset.m = m;
+      b.onclick = () => { current = m; render(); };
+      monthsEl.appendChild(b);
+    });
+  }
   $('#prev').onclick = () => { const i = months.indexOf(current); if (i > 0) { current = months[i - 1]; render(); } };
   $('#next').onclick = () => { const i = months.indexOf(current); if (i < months.length - 1) { current = months[i + 1]; render(); } };
+
+  async function selectPark(p) {
+    park = p;
+    try { localStorage.setItem('park', p.id); } catch (e) { /* 무시 */ }
+    const url = new URL(location.href); url.searchParams.set('park', p.id);
+    history.replaceState(null, '', url);
+    $('#parkName').textContent = p.name;
+    $('#parkLoc').textContent = p.location || '';
+    document.title = p.name + ' 행사 달력';
+    monthsEl.innerHTML = '<span class="loading">불러오는 중…</span>';
+    const data = await loadPark(p);
+    months = data.months;
+    events = normalize(data.events);
+    current = months.includes(todayStr.slice(0, 7)) ? todayStr.slice(0, 7) : months[0];
+    buildMonthTabs();
+    render();
+  }
 
   // filters
   const filtersEl = $('#filters');
@@ -312,7 +392,7 @@ function init(DATA) {
     $('#prev').disabled = months.indexOf(current) === 0;
     $('#next').disabled = months.indexOf(current) === months.length - 1;
 
-    const note = DATA.monthNotes && DATA.monthNotes[current];
+    const note = park.monthNotes && park.monthNotes[current];
     $('#monthNote').hidden = !note;
     $('#monthNote').textContent = note || '';
 
@@ -429,7 +509,7 @@ function init(DATA) {
   $('#overlay').onclick = (ev) => { if (ev.target === ev.currentTarget) ev.currentTarget.classList.remove('open'); };
   document.addEventListener('keydown', (ev) => { if (ev.key === 'Escape') $('#overlay').classList.remove('open'); });
 
-  render();
+  selectPark(park);
 }
 </script>
 </body>

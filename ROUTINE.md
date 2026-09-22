@@ -1,71 +1,81 @@
 # 일일 조사 루틴 설계
 
-목표: 매일 청라호수공원 행사를 조사해 새 행사·변경 사항이 있으면 `data/YYYY-MM.json` 에 병합하고 Object Storage 에 업로드한다.
+목표: 매일 인천 주요 공원의 행사를 조사해 새 행사·변경 사항이 있으면 `data/<공원>/YYYY-MM.json` 에 병합하고 NCP Object Storage 에 업로드한다.
 
-## 파일 구조 (Object Storage 버킷도 동일)
+## 파일 구조 (버킷도 동일)
 
 ```
-index.html              달력 (수정 없음)
-data/config.json        표시 범위·카테고리·월별 안내·최종 갱신일
-data/2026-08.json       8월 시작 행사 목록   ← 루틴이 갱신하는 파일
-data/2026-09.json
-...
+index.html                     달력 (공원 선택 UI 포함, 루틴은 건드리지 않음)
+data/config.json               카테고리, 공원 목록, 공원별 표시 범위·월별 안내, 최종 갱신일
+data/cheongna/2026-09.json     청라호수공원 9월 행사   ← 루틴이 갱신
+data/songdo/2026-09.json       송도 센트럴파크 9월 행사 ← 루틴이 갱신
 ```
 
-- 달력은 `config.range` 로 월 목록을 만들고 `data/YYYY-MM.json` 을 모두 읽습니다. 파일이 없는 달은 빈 달로 처리됩니다.
+- 달력은 `config.json` 의 `parks` 를 읽어 공원 선택 메뉴를 만들고, 선택된 공원의 `range` 에 해당하는 월 파일을 모두 읽습니다.
+- 파일이 없는 달은 빈 달로 처리되므로, 미리 만들어 둘 필요는 없습니다.
 - 기간 행사는 **시작 월** 파일에 한 번만 넣습니다. 달력이 종료일까지 이어서 표시합니다.
-- 범위를 늘릴 때는 `config.range.end` 만 바꾸면 됩니다 (예: `"2027-02"`).
+- 범위 밖의 행사를 병합하면 `merge_events.py` 가 `range` 를 자동으로 넓힙니다. 새 달을 수동으로 열 필요가 없습니다.
+
+## 조사 대상 공원
+
+| id | 이름 | 위치 |
+|---|---|---|
+| `cheongna` | 청라호수공원 | 인천 서구 청라국제도시 |
+| `songdo` | 송도 센트럴파크 | 인천 연수구 송도국제도시 |
 
 ## 루틴 1회 실행 순서
 
-1. **현재 데이터 내려받기** (NCP Object Storage → 로컬 `data/`)
+1. **현재 데이터 내려받기**
    ```bash
-   aws --profile ncp --endpoint-url https://kr.object.ncloudstorage.com s3 sync s3://<버킷>/data ./data
+   python3 scripts/deploy_ncp.py pull --bucket pjs.test
    ```
-2. **조사**: 아래 채널을 확인해 `data/*.json` 에 없는 행사, 또는 내용이 바뀐 행사(출연진 공개, 취소, 일정 변경)를 찾는다.
-   - 인천시설공단 청라공원 공지·행사일정 https://www.insiseol.or.kr/park/cheongna/
+2. **조사**: 공원별로 아래 채널을 확인해, 등록되지 않은 행사와 내용이 바뀐 행사를 찾습니다.
+
+   공통
    - 인천경제자유구역청 축제/행사 https://www.ifez.go.kr/main/culture/event/list.do
-   - 서해구 전체행사 https://www.seohae.go.kr/open_content/festival/sub/event_all.jsp?view=2
-   - 인천서해구문화재단 축제 https://www.iscf.kr/_new/html/event/festival.php
+   - 인천관광공사, 인천광역시 주요행사정보 https://www.incheon.go.kr/IC010501
+
+   청라호수공원
+   - 인천시설공단 청라공원 https://www.insiseol.or.kr/park/cheongna/
+   - 행사일정 달력 `https://www.insiseol.or.kr/park_cheongna/scheduleCalendar.do?year_month=YYYY-MM&siteDiv=park_cheongna&schDiv=main`
+   - 서구 전체행사 https://www.seohae.go.kr/open_content/festival/sub/event_all.jsp?view=2
+   - 인천서구문화재단 https://www.iscf.kr/_new/html/event/festival.php
    - 청라닷컴 행사소식 https://www.cheongna.com/server/bbs/board.php?bo_table=sub_05_03
-   - 뉴스 검색: `청라호수공원 행사`, `청라호수공원 축제`, `청라호수공원 공연`, `I♥FEsta 청라`, `청라페스티벌`
-3. **결과를 JSON 으로 작성**: `scripts/new_events.sample.json` 형식. 새 행사가 없으면 `{"events": []}`.
-   - 기존 행사를 고칠 때는 같은 `id` 를 쓰고 바뀐 필드만 넣는다.
-   - 확정되지 않은 일정은 `"status": "tentative"`.
-   - `sources` 에 반드시 출처 URL 을 넣는다.
+
+   송도 센트럴파크
+   - 인천시설공단 송도공원 https://www.insiseol.or.kr/park/songdo/
+   - 행사일정 달력 `https://www.insiseol.or.kr/park_songdo/scheduleCalendar.do?year_month=YYYY-MM&siteDiv=park_songdo&schDiv=main`
+   - 연수구청 행사 안내
+
+   웹 검색어: `<공원명> 행사`, `<공원명> 축제`, `<공원명> 공연`, `<공원명> YYYY년 M월`, `I♥FEsta 청라`, `I♥FEsta 송도`
+
+3. **결과 작성**: 공원마다 별도 파일로 저장합니다 (`new_cheongna.json`, `new_songdo.json`). 형식은 `scripts/new_events.sample.json` 참고. 새 내용이 없으면 `{"events": []}`.
 4. **병합**
    ```bash
-   python3 scripts/merge_events.py new_events.json
+   python3 scripts/merge_events.py --park cheongna new_cheongna.json
+   python3 scripts/merge_events.py --park songdo   new_songdo.json
    ```
-   마지막 줄이 `CHANGED=1` 이면 5번으로, `CHANGED=0` 이면 종료.
-5. **업로드** (변경된 파일만)
+   두 실행의 마지막 줄이 모두 `CHANGED=0` 이면 업로드를 생략합니다.
+5. **업로드**
    ```bash
-   NCP_BUCKET=<버킷> ./scripts/deploy_ncp.sh data
+   python3 scripts/deploy_ncp.py data --bucket pjs.test
    ```
-   `index.html` 까지 올릴 때는 `./scripts/deploy_ncp.sh` (인자 없이). 화면을 고쳤을 때만 필요하다.
+6. **보고**: 공원별 추가·갱신 내역, 업로드 결과, 보류한 후보를 요약합니다.
 
-## 루틴(스케줄 에이전트)용 프롬프트 초안
+## 조사 품질 규칙
 
-```
-당신은 인천 청라호수공원 행사 조사 담당입니다. 저장소 hosu_event 의 ROUTINE.md 를 따르세요.
-1. data/*.json 을 읽어 이미 등록된 행사 목록을 파악합니다.
-2. ROUTINE.md 의 채널을 웹 검색·조회해, 등록되지 않은 행사와 내용이 바뀐 행사를 찾습니다.
-   조사 범위: 오늘부터 data/config.json 의 range.end 까지.
-3. 결과를 new_events.json 으로 저장하고 python3 scripts/merge_events.py new_events.json 을 실행합니다.
-4. CHANGED=1 이면 data/ 를 Object Storage 에 업로드하고, 추가·갱신된 행사 제목을 요약해 보고합니다.
-   CHANGED=0 이면 "변경 없음"으로 보고합니다.
-출처 없는 행사는 추가하지 않습니다. 호수공원 밖 행사는 category "nearby" 로만 넣습니다.
-```
+- **연도를 반드시 확인합니다.** 검색 결과에 과거 연도 기사가 많이 섞입니다. 기사 작성일과 본문 연도를 확인하고, 애매하면 추가하지 말고 보류 후보로 보고합니다.
+- 출처 URL 이 없는 행사는 추가하지 않습니다.
+- 장소가 공원 내부인 행사만 일반 카테고리로 넣고, 공원 밖이지만 해당 지역에 영향이 큰 행사는 `nearby` 로 넣습니다.
+- 이미 등록된 행사는 실제로 바뀐 내용이 있을 때만 같은 `id` 로 바뀐 필드만 갱신합니다.
+- 확정되지 않은 일정은 `status: "tentative"`.
 
 ## 알려진 함정: PutObject AccessDenied
 
 AWS CLI 2.23+ / boto3 1.36+ 는 업로드마다 CRC32 무결성 체크섬을 기본으로 붙이는데, NCP Object Storage 는 이를 지원하지 않고 **AccessDenied** 로 응답한다. 권한 문제로 오인하기 쉽다.
 판별법: `copy-object` 는 되는데 `put-object` 만 AccessDenied 면 이 문제다 (복사도 쓰기 작업이므로 권한은 정상).
-해결: 아래 설정 중 하나. 저장소의 배포 스크립트에는 이미 적용되어 있다.
+해결은 배포 스크립트에 이미 적용되어 있다. 직접 CLI 를 쓸 때는:
 ```bash
-aws configure set request_checksum_calculation when_required --profile ncp
-aws configure set response_checksum_validation when_required --profile ncp
-# 또는 환경변수
 export AWS_REQUEST_CHECKSUM_CALCULATION=when_required
 export AWS_RESPONSE_CHECKSUM_VALIDATION=when_required
 ```
@@ -75,6 +85,7 @@ export AWS_RESPONSE_CHECKSUM_VALIDATION=when_required
 - 버킷 생성 시 **암호화 설정 안 함** (암호화 버킷은 정적 웹사이트 호스팅 불가)
 - 버킷 권한 관리에서 **전체 공개 → 공개**
 - 버킷 옵션 메뉴 → **정적 웹 사이트 호스팅** → 인덱스 파일 `index.html`
-- 업로드는 `scripts/deploy_ncp.sh` 사용 (객체마다 `public-read` ACL 과 `no-cache` 를 붙여 올림)
+- 업로드 스크립트가 객체마다 `public-read` ACL 과 `no-cache` 를 붙임
 - `index.html` 과 `data/` 가 같은 버킷이므로 CORS 설정 불필요
 - 엔드포인트 `https://kr.object.ncloudstorage.com`, 리전 `kr-standard`
+- 인증: 환경변수 `NCP_ACCESS_KEY` / `NCP_SECRET_KEY`, 또는 AWS CLI 프로필 `ncp`
