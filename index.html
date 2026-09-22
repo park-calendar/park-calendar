@@ -167,7 +167,9 @@
   .num { font-size: 13px; line-height: 1; margin-bottom: 2px; display: flex; justify-content: space-between; align-items: center; }
   .day.has-events .num > span:first-child { font-weight: 700; }
   .num .badge { font-size: 10px; background: var(--accent); color: #fff; border-radius: 999px; padding: 1px 6px; font-weight: 600; }
-  .day.sun .num { color: var(--sun); }
+  .day.sun .num, .day.holiday .num { color: var(--sun); }
+  .hol { font-size: 10.5px; color: var(--sun); line-height: 1.25; margin: -1px 0 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .day.other .hol { color: var(--other-month); }
   .day.sat .num { color: var(--sat); }
   .day.other .num { color: var(--other-month); }
 
@@ -189,7 +191,7 @@
   .list .date { text-align: center; }
   .list .date .d { font-size: 22px; font-weight: 700; line-height: 1.1; }
   .list .date .w { font-size: 12px; color: var(--muted); }
-  .list .date.sun .d { color: var(--sun); } .list .date.sat .d { color: var(--sat); }
+  .list .date.sun .d, .list .date.hol .d { color: var(--sun); } .list .date.sat .d { color: var(--sat); }
   .list .t { font-weight: 600; font-size: 15px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
   .list .meta { font-size: 13px; color: var(--muted); }
   .list .empty { color: var(--muted); text-align: center; padding: 36px 0; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; }
@@ -205,6 +207,7 @@
   .modal-head { position: sticky; top: 0; background: var(--surface); padding: 16px 20px 10px; border-bottom: 1px solid var(--border); display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; z-index: 1; }
   .modal-head h2 { margin: 0; font-size: 18px; }
   .modal-head .sub { font-size: 13px; color: var(--muted); margin-top: 2px; }
+  .modal-head .holname { color: var(--sun); font-weight: 600; }
   .close { background: none; border: none; font-size: 22px; line-height: 1; color: var(--muted); cursor: pointer; padding: 2px 6px; }
   .modal-body { padding: 8px 20px 20px; }
   .ev { padding: 14px 0; border-bottom: 1px solid var(--border); }
@@ -336,6 +339,16 @@ function shiftMonth(key, delta) {
   return y + '-' + pad(m);
 }
 
+let HOLIDAYS = {};
+async function loadHolidays() {
+  try {
+    const r = await fetch(DATA_DIR + 'holidays.json?t=' + Date.now(), { cache: 'no-store' });
+    if (!r.ok) return;
+    const j = await r.json();
+    if (j && j.holidays) HOLIDAYS = j.holidays;
+  } catch (e) { /* 공휴일은 없어도 달력은 동작한다 */ }
+}
+
 async function loadConfig() {
   const res = await fetch(DATA_DIR + 'config.json?t=' + Date.now(), { cache: 'no-store' });
   if (!res.ok) throw new Error('config.json HTTP ' + res.status);
@@ -344,7 +357,7 @@ async function loadConfig() {
   return config;
 }
 
-loadConfig().then(init).catch((err) => {
+Promise.all([loadConfig(), loadHolidays()]).then(([config]) => init(config)).catch((err) => {
   const isFile = location.protocol === 'file:';
   document.querySelector('#error').innerHTML = '<div class="error"><b>데이터를 불러오지 못했습니다.</b> (' + String(err.message || err).replace(/[<>]/g, '') + ')<br>' +
     (isFile
@@ -559,14 +572,22 @@ function init(CONFIG) {
         const key = ymd(date);
         const other = date.getMonth() !== m - 1;
         if (!other) anyThisMonth = true;
+        const hol = HOLIDAYS[key];
         const cell = document.createElement('div');
-        cell.className = 'day' + (other ? ' other' : '') + (d === 0 ? ' sun' : '') + (d === 6 ? ' sat' : '') + (key === todayStr ? ' today' : '');
+        cell.className = 'day' + (other ? ' other' : '') + (d === 0 ? ' sun' : '') + (d === 6 ? ' sat' : '')
+                       + (hol ? ' holiday' : '') + (key === todayStr ? ' today' : '');
         const list = other ? [] : eventsOn(key);
         if (list.length) cell.classList.add('has-events');
 
         const num = document.createElement('div'); num.className = 'num';
         num.innerHTML = '<span>' + date.getDate() + '</span>' + (list.length ? '<span class="badge">' + list.length + '</span>' : '');
         cell.appendChild(num);
+
+        if (hol && !other) {
+          const h = document.createElement('div'); h.className = 'hol';
+          h.textContent = hol; h.title = hol;
+          cell.appendChild(h);
+        }
 
         const dots = document.createElement('div'); dots.className = 'dots';
         list.forEach((e) => { const i = document.createElement('i'); i.style.background = color(e); dots.appendChild(i); });
@@ -615,7 +636,7 @@ function init(CONFIG) {
       const item = document.createElement('div');
       item.className = 'item' + (isPast(e) ? ' past' : '');
       item.innerHTML =
-        '<div class="date' + (wd === 0 ? ' sun' : wd === 6 ? ' sat' : '') + '">' +
+        '<div class="date' + (wd === 0 ? ' sun' : wd === 6 ? ' sat' : '') + (HOLIDAYS[shown] ? ' hol' : '') + '">' +
           '<div class="d">' + date.getDate() + '</div>' +
           '<div class="w">' + WEEK[wd] + (isRange(e) ? '<br>~' + e.end.slice(5).replace('-', '/') : '') + '</div>' +
         '</div>' +
@@ -634,9 +655,11 @@ function init(CONFIG) {
     const list = eventsOn(key);
     const date = parse(key);
     $('#mTitle').textContent = (date.getMonth() + 1) + '월 ' + date.getDate() + '일 (' + WEEK[date.getDay()] + ')';
-    $('#mSub').textContent = list.length ? list.length + '건의 행사' : '';
+    const holName = HOLIDAYS[key];
+    $('#mSub').innerHTML = (holName ? '<span class="holname">' + esc(holName) + '</span>' + (list.length ? ' · ' : '') : '')
+                         + (list.length ? list.length + '건의 행사' : (holName ? '' : ''));
     const body = $('#mBody'); body.innerHTML = '';
-    if (!list.length) body.innerHTML = '<div class="none">이 날짜에 등록된 행사가 없습니다.</div>';
+    if (!list.length) body.innerHTML = '<div class="none">' + (holName ? '공휴일입니다. ' : '') + '이 날짜에 등록된 행사가 없습니다.</div>';
     list.forEach((e) => body.appendChild(renderEvent(e)));
     $('#overlay').classList.add('open');
     if (focusId) {

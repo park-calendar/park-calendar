@@ -7,6 +7,8 @@
 | `index.html` | 달력 화면. `data/` 의 JSON 을 읽어 렌더링 |
 | `data/config.json` | 카테고리, 공원 목록, 공원별 표시 범위·월별 안내, 최종 갱신일 |
 | `data/<공원>/YYYY-MM.json` | 해당 공원의 월별 행사 목록. **루틴이 갱신하는 파일** |
+| `data/holidays.json` | 대한민국 공휴일(2026~2027). 달력에 빨간 날짜와 이름으로 표시 |
+| `.claude/settings.json` | 루틴이 승인 없이 돌도록 하는 권한 규칙 |
 | `scripts/merge_events.py` | 새 행사 JSON 을 월 파일에 병합(중복 제거·갱신) |
 | `scripts/new_events.sample.json` | 루틴이 만들어야 하는 입력 형식 예시 |
 | `scripts/deploy_ncp.sh` | NCP 업로드, AWS CLI 사용 (`NCP_BUCKET=버킷 ./scripts/deploy_ncp.sh`) |

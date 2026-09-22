@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "WebFetch",
+      "Read",
+      "Glob",
+      "Grep",
+      "Bash(cd *)",
+      "Bash(ls *)",
+      "Bash(cat *)",
+      "Bash(head *)",
+      "Bash(tail *)",
+      "Bash(grep *)",
+      "Bash(find *)",
+      "Bash(mkdir *)",
+      "Bash(echo *)",
+      "Bash(date *)",
+      "Bash(python3 *)",
+      "Bash(.venv/bin/python *)",
+      "Bash(./.venv/bin/python *)",
+      "Bash(.venv/bin/pip install *)",
+      "Bash(./.venv/bin/pip install *)",
+      "Bash(scripts/deploy_ncp.sh *)",
+      "Bash(./scripts/deploy_ncp.sh *)",
+      "Bash(NCP_BUCKET=pjs.test ./scripts/deploy_ncp.sh *)",
+      "Bash(curl *)",
+      "Edit(new_cheongna.json)",
+      "Edit(new_songdo.json)",
+      "Edit(data/**)"
+    ],
+    "deny": [
+      "Bash(sudo *)",
+      "Bash(rm -rf *)",
+      "Bash(aws *)",
+      "Bash(git push *)",
+      "Bash(gh *)",
+      "Bash(ssh *)",
+      "Bash(scp *)",
+      "Edit(index.html)",
+      "Edit(.claude/**)",
+      "Read(.env*)",
+      "Read(~/.aws/**)"
+    ]
+  }
+}
