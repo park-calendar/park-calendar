@@ -5,8 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>인천 공원 행사 달력</title>
 <meta name="description" content="인천 주요 공원의 행사 일정을 달력으로 확인합니다.">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" crossorigin="">
-<script defer src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" crossorigin=""></script>
+<script src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=t7056o3glp"></script>
 <style>
   :root {
     --bg: #f4f5f7;
@@ -243,7 +242,6 @@
   .ovkv dt { color: var(--muted); margin: 0; } .ovkv dd { margin: 0; }
   .maparea { display: grid; grid-template-columns: 1fr 260px; gap: 12px; }
   #map { height: 420px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface-2); }
-  .leaflet-container { font: inherit; background: var(--surface-2); }
   .facpanel { max-height: 420px; overflow: auto; display: flex; flex-direction: column; gap: 6px; }
   .facpanel button {
     text-align: left; background: var(--surface-2); border: 1px solid transparent; border-radius: 8px;
@@ -260,10 +258,15 @@
   .facmark {
     width: 26px; height: 26px; border-radius: 50% 50% 50% 4px; transform: rotate(-45deg);
     display: grid; place-items: center; box-shadow: 0 2px 5px rgba(0,0,0,.35); border: 2px solid #fff;
+    box-sizing: border-box;
   }
   .facmark span { transform: rotate(45deg); font-size: 12px; line-height: 1; color: #fff; font-weight: 700; }
-  .facmark.on { width: 34px; height: 34px; z-index: 500; }
+  .facmark.on { width: 34px; height: 34px; }
   .facmark.on span { font-size: 15px; }
+  .navertip {
+    background: var(--surface); color: var(--text); border: 1px solid var(--border); border-radius: 6px;
+    padding: 3px 8px; font-size: 12px; font-weight: 600; white-space: nowrap; box-shadow: 0 2px 6px rgba(0,0,0,.2);
+  }
   .facpanel button .ico {
     display: inline-grid; place-items: center; width: 18px; height: 18px; border-radius: 50%;
     font-size: 10px; color: #fff; font-weight: 700; margin-right: 6px; vertical-align: -3px;
@@ -395,6 +398,15 @@
 
 <script>
 const DATA_DIR = 'data/';   // config.json 과 <공원>/YYYY-MM.json 이 있는 경로
+
+// 네이버 지도 인증 실패 시 (도메인 미등록 등) 안내
+let mapAuthFailed = false;
+window.navermap_authFailure = function () {
+  mapAuthFailed = true;
+  const el = document.querySelector('#map');
+  if (el) el.innerHTML = '<div style="padding:16px" class="loading">지도 인증에 실패했습니다. ' +
+    '네이버 클라우드 콘솔에서 이 사이트 주소가 Web 서비스 URL 로 등록되어 있는지 확인해 주세요.</div>';
+};
 
 const pad = (n) => String(n).padStart(2, '0');
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -618,13 +630,15 @@ function init(CONFIG) {
     '화장실':   { color: '#c0392b', glyph: '화' }
   };
   const facStyle = (f) => FAC_STYLE[f.category] || { color: '#666', glyph: '·' };
-  const facIcon = (f, on) => L.divIcon({
-    className: '',
-    html: '<div class="facmark' + (on ? ' on' : '') + '" style="background:' + facStyle(f).color + '"><span>' +
-          esc(facStyle(f).glyph) + '</span></div>',
-    iconSize: on ? [34, 34] : [26, 26],
-    iconAnchor: on ? [17, 34] : [13, 26]
-  });
+  const facIcon = (f, on) => {
+    const n = on ? 34 : 26;
+    return {
+      content: '<div class="facmark' + (on ? ' on' : '') + '" style="background:' + facStyle(f).color + '"><span>' +
+               esc(facStyle(f).glyph) + '</span></div>',
+      size: new naver.maps.Size(n, n),
+      anchor: new naver.maps.Point(n / 2, n)
+    };
+  };
 
   async function loadFacilities(parkId) {
     try {
@@ -684,28 +698,39 @@ function init(CONFIG) {
     });
   }
 
+  let tipWindow = null;
+
   function initMap() {
-    if (typeof L === 'undefined') {
+    if (mapAuthFailed) { window.navermap_authFailure(); return; }
+    if (typeof naver === 'undefined' || !naver.maps) {
       $('#map').innerHTML = '<div style="padding:16px" class="loading">지도를 불러오지 못했습니다. 네트워크를 확인해 주세요.</div>';
       return;
     }
-    const c = facData.center || { lat: 37.535, lng: 126.65 };
-    if (map) { map.remove(); map = null; }
+    const c = facData.center || { lat: 37.535, lng: 126.635 };
     markers = {};
-    map = L.map('map', { scrollWheelZoom: false }).setView([c.lat, c.lng], facData.zoom || 15);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    }).addTo(map);
+    map = new naver.maps.Map('map', {
+      center: new naver.maps.LatLng(c.lat, c.lng),
+      zoom: facData.zoom || 15,
+      scrollWheel: false,
+      mapDataControl: false,
+      logoControlOptions: { position: naver.maps.Position.BOTTOM_LEFT },
+      zoomControl: true,
+      zoomControlOptions: { position: naver.maps.Position.TOP_LEFT }
+    });
+    tipWindow = new naver.maps.InfoWindow({
+      content: '', borderWidth: 0, backgroundColor: 'transparent',
+      disableAnchor: true, pixelOffset: new naver.maps.Point(0, -6)
+    });
 
     facData.facilities.forEach((f) => {
       if (typeof f.lat !== 'number' || typeof f.lng !== 'number') return;
-      const m = L.marker([f.lat, f.lng], { title: f.name, icon: facIcon(f, false) }).addTo(map);
-      m.bindTooltip(f.name, { direction: 'top', offset: [0, -8] });
-      m.on('click', () => selectFac(f.id, false));
+      const m = new naver.maps.Marker({
+        position: new naver.maps.LatLng(f.lat, f.lng),
+        map: map, title: f.name, icon: facIcon(f, false)
+      });
+      naver.maps.Event.addListener(m, 'click', () => selectFac(f.id, false));
       markers[f.id] = m;
     });
-    map.invalidateSize();
     if (selectedFac) selectFac(selectedFac, false);
   }
 
@@ -714,9 +739,17 @@ function init(CONFIG) {
     const f = facData.facilities.find((x) => x.id === id);
     if (!f) return;
     $('#facPanel').querySelectorAll('button').forEach((b) => b.classList.toggle('active', b.dataset.id === id));
-    facData.facilities.forEach((x) => { if (markers[x.id]) markers[x.id].setIcon(facIcon(x, x.id === id)); });
-    if (pan && map && markers[id]) map.setView(markers[id].getLatLng(), Math.max(map.getZoom(), 16));
-    if (markers[id]) markers[id].openTooltip();
+    if (map) {
+      facData.facilities.forEach((x) => { if (markers[x.id]) markers[x.id].setIcon(facIcon(x, x.id === id)); });
+      const m = markers[id];
+      if (m) {
+        if (pan) { map.setCenter(m.getPosition()); if (map.getZoom() < 16) map.setZoom(16); }
+        if (tipWindow) {
+          tipWindow.setContent('<div class="navertip">' + esc(f.name) + '</div>');
+          tipWindow.open(map, m);
+        }
+      }
+    }
 
     let html = '<h3>' + esc(f.name) +
       (f.category ? '<span class="tag" style="background:var(--accent)">' + esc(f.category) + '</span>' : '') +
@@ -746,7 +779,10 @@ function init(CONFIG) {
     $('#parkLoc').textContent = p.location || '';
     document.title = p.name + ' 행사 달력';
     $('#weeks').innerHTML = '<div style="padding:24px" class="loading">불러오는 중…</div>';
-    selectedFac = null; if (map) { map.remove(); map = null; }
+    selectedFac = null;
+    if (map) { map.destroy(); map = null; }
+    if (tipWindow) { tipWindow = null; }
+    markers = {};
     facData = await loadFacilities(p.id);
     $('#infoBtn').hidden = !facData;
     $('#infoBtnLabel').textContent = (facData && facData.buttonLabel) || '공원 안내';

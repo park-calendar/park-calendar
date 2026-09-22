@@ -28,7 +28,12 @@
       "Bash(curl *)",
       "Edit(new_cheongna.json)",
       "Edit(new_songdo.json)",
-      "Edit(data/**)"
+      "Edit(data/**)",
+      "Bash(git pull *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git push *)",
+      "Bash(rm new_*.json)"
     ],
     "deny": [
       "Bash(sudo *)",
