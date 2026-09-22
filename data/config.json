@@ -19,7 +19,8 @@
     },
     "regular": {
       "label": "상시운영",
-      "color": "#8a8f98"
+      "color": "#8a8f98",
+      "defaultOff": true
     },
     "nearby": {
       "label": "인근·참고",

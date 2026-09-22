@@ -28,22 +28,19 @@ data/songdo/2026-09.json       송도 센트럴파크 9월 행사 ← 루틴이 
 매일 오전 8시(KST)에 **이 Mac의 예약 작업**(`【매일 08:00】인천 공원 행사 업데이트`)이 실행합니다.
 Claude 데스크톱 앱이 켜져 있어야 하며, 꺼져 있었다면 다음 실행 시 수행됩니다.
 
-### 클라우드 루틴을 쓰지 못하는 이유
+### 클라우드 루틴을 쓰지 않는 이유
 
-클라우드 루틴 `trig_011AweBj5m3h2JWyJ6SnZjJB` 을 만들어 두었으나 **비활성** 상태입니다.
-Claude 클라우드 샌드박스의 egress 프록시가 조직 정책으로 `kr.object.ncloudstorage.com` 을 차단합니다
-(`connect_rejected`). 그래서 클라우드에서는 버킷을 읽지도 쓰지도 못합니다.
-아래가 해결되면 루틴을 켜서 쓸 수 있습니다.
+2026-09-22 실측 결과, Claude 클라우드 샌드박스의 egress 프록시는 기본 거부에 개발 인프라만 허용합니다.
 
-1. 환경 `NCP` 의 egress 허용 목록에 `kr.object.ncloudstorage.com` 추가 (조직 관리자 권한 필요할 수 있음)
-2. 허용 후 루틴을 활성화하고, 중복 방지를 위해 로컬 예약 작업을 끈다
+| 대상 | 결과 |
+|---|---|
+| WebSearch | 동작 |
+| github.com, raw.githubusercontent.com, pypi.org | 통과 |
+| kr.object.ncloudstorage.com | 차단 |
+| insiseol.or.kr, ifez.go.kr | 차단 (WebFetch 도 EGRESS_BLOCKED) |
 
-클라우드용 스크립트 사본은 이미 버킷 `_tools/` 에 올려 두었습니다. 스크립트를 고치면 사본도 갱신해야 합니다.
-```bash
-aws --profile ncp --endpoint-url https://kr.object.ncloudstorage.com \
-  s3 cp scripts/merge_events.py s3://pjs.test/_tools/merge_events.py \
-  --acl public-read --content-type "text/x-python; charset=utf-8" --cache-control no-cache
-```
+버킷뿐 아니라 조사 대상 공식 사이트까지 막혀 원문 교차 확인이 불가능하므로 클라우드는 적합하지 않습니다.
+옮기려면 환경의 egress 허용 목록에 위 도메인들을 추가해야 하며, 조직 관리자 권한이 필요할 수 있습니다.
 
 ## 루틴 1회 실행 순서
 
