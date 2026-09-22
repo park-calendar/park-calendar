@@ -1,0 +1,152 @@
+{
+  "month": "2026-09",
+  "events": [
+    {
+      "id": "ifez-rc-2026",
+      "title": "IFEZ RC 모빌리티 챔피언십",
+      "category": "sports",
+      "start": "2026-09-12",
+      "time": "10:00~17:00",
+      "place": "청라호수공원 물속광장",
+      "host": "인천경제자유구역청",
+      "summary": "2026 IFEZ 철인3종경기대회 부대행사. RC카·RC보트 전시, 조립·레이싱 체험.",
+      "details": [
+        "오전: RC카 전시, 미니카 조립·레이싱, RC보트 시연·체험",
+        "오후: 빈티지 RC 전시·레이스, 중장비 RC 시연·체험, 종목별 자유주행"
+      ],
+      "fee": "무료 관람·체험",
+      "status": "ended",
+      "sources": [
+        {
+          "label": "쿠키뉴스 2026-09-10",
+          "url": "https://www.kukinews.com/article/view/kuk202609100143"
+        },
+        {
+          "label": "데일리스포츠한국",
+          "url": "https://www.dailysportshankook.co.kr/news/articleView.html?idxno=433426"
+        }
+      ]
+    },
+    {
+      "id": "ifez-dance-2026",
+      "title": "IFEZ 청소년 K-POP 댄스 페스티벌",
+      "category": "concert",
+      "start": "2026-09-12",
+      "time": "17:00~19:40",
+      "place": "청라호수공원 멀티프라자",
+      "host": "인천경제자유구역청",
+      "summary": "인천 지역 청소년 K-POP 댄스 경연. 스트리트댄스·랜덤플레이댄스 진행.",
+      "details": [
+        "청소년 K-POP 댄스 경연",
+        "스트리트댄스 공연, 관객 참여 랜덤플레이댄스"
+      ],
+      "fee": "무료",
+      "status": "ended",
+      "sources": [
+        {
+          "label": "쿠키뉴스 2026-09-10",
+          "url": "https://www.kukinews.com/article/view/kuk202609100143"
+        }
+      ]
+    },
+    {
+      "id": "one-island-picnic-2026",
+      "title": "원 아일랜드 뮤직 피크닉",
+      "category": "concert",
+      "start": "2026-09-12",
+      "time": "11:00~21:00",
+      "place": "청라호수공원 플라워아일랜드",
+      "summary": "김장훈·정동하·설하윤 등 출연 무료 음악축제. 버스킹, 매직버블쇼, 플리마켓, 푸드트럭.",
+      "details": [
+        "출연: 김장훈, 정동하, 설하윤, 오유진, 크레이즈엔젤, 하티크, DDB, 오페라움 클래식팀",
+        "12:00~16:00 인천 뮤지션 버스킹 스테이지",
+        "16:00~18:00 매직버블쇼",
+        "플리마켓(디저트·방향제·밀키트·의류), 푸드트럭 운영",
+        "MC 권선희"
+      ],
+      "fee": "전석 무료",
+      "status": "ended",
+      "sources": [
+        {
+          "label": "청라닷컴 행사소식",
+          "url": "https://www.cheongna.com/server/bbs/board.php?bo_table=sub_05_03&wr_id=112"
+        }
+      ]
+    },
+    {
+      "id": "ifez-triathlon-2026",
+      "title": "2026 IFEZ 철인3종경기대회",
+      "category": "sports",
+      "start": "2026-09-13",
+      "time": "07:00~11:00",
+      "place": "청라호수공원(수영) · 청라국제도시 일원(사이클·달리기)",
+      "host": "인천경제자유구역청",
+      "summary": "올림픽 코스(수영 1.5km·사이클 40km·달리기 10km) 도심형 철인3종. 약 500명 참가.",
+      "details": [
+        "수영 1.5km – 청라호수공원 호수",
+        "사이클 40km – 청라국제도시 도로 순환",
+        "달리기 10km",
+        "교통통제: 9/13 07:00~11:00 청라호수공원 주변 도로 및 공원 일부 구간"
+      ],
+      "status": "ended",
+      "sources": [
+        {
+          "label": "데일리스포츠한국",
+          "url": "https://www.dailysportshankook.co.kr/news/articleView.html?idxno=433426"
+        },
+        {
+          "label": "경기신문",
+          "url": "https://www.kgnews.co.kr/news/article.html?no=911099"
+        }
+      ]
+    },
+    {
+      "id": "ifff-2026",
+      "title": "2026 제3회 인천 피트니스 패밀리 페스티벌(IFFF)",
+      "category": "festival",
+      "start": "2026-09-19",
+      "place": "청라호수공원 야외음악당",
+      "host": "주최 (사)국제휘트니스스포츠협회 · 주관 인바코리아 · 후원 인천광역시, 인천관광공사",
+      "summary": "온 가족 참여형 건강문화축제. 피트니스 경연, 태권도 시범, 키즈 DJ, 메가트론·범블비 퍼포먼스.",
+      "details": [
+        "피트니스 경연 대회",
+        "바른자세 운동 및 헬스케어 체험",
+        "태권도 시범 및 체험",
+        "키즈 DJ 공연",
+        "대형 로봇 캐릭터(메가트론·범블비) 퍼포먼스 및 포토타임",
+        "청라 지역 식당·카페 100여 곳 할인쿠폰·식사권 연계, 굿네이버스 장학금 1,500만원 기탁"
+      ],
+      "status": "ended",
+      "sources": [
+        {
+          "label": "중도일보 2026-09-17",
+          "url": "https://www.joongdo.co.kr/web/view.php?key=20260917010005805"
+        },
+        {
+          "label": "인천투데이",
+          "url": "https://www.incheontoday.com/news/articleView.html?idxno=323769"
+        }
+      ]
+    },
+    {
+      "id": "lakehouse-reopen-2026",
+      "title": "레이크하우스 새단장 재개장",
+      "category": "facility",
+      "start": "2026-09-23",
+      "place": "청라호수공원 레이크하우스",
+      "host": "인천경제자유구역청",
+      "summary": "카페테리아·매점·수상레저를 통합 운영. 신데렐라보트·문보트·패밀리보트 신규 도입.",
+      "details": [
+        "카페테리아, 매점, 수상레저시설 단일 운영사업자 통합 운영",
+        "수상레저기구 확대: 신데렐라보트, 문보트, 패밀리보트 신규 도입",
+        "이용요금: 기구 종류별 35,000~39,000원"
+      ],
+      "sources": [
+        {
+          "label": "뉴스라이트 2026-09-17",
+          "url": "https://www.newsgg.net/news/article.html?no=465285"
+        }
+      ]
+    }
+  ]
+}

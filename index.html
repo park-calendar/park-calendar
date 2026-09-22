@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>청라호수공원 행사 달력</title>
+<meta name="description" content="인천 청라호수공원 행사 일정 달력. data/ 폴더의 월별 JSON 을 갱신하면 자동 반영됩니다.">
+<style>
+  :root {
+    --bg: #f4f5f7;
+    --surface: #ffffff;
+    --surface-2: #f0f1f4;
+    --border: #dfe2e8;
+    --text: #1d2229;
+    --muted: #6b7280;
+    --accent: #1f78c8;
+    --today: #fff3cd;
+    --today-border: #f0b429;
+    --sun: #d93a3a;
+    --sat: #2b6cd9;
+    --other-month: #b8bcc4;
+    --shadow: 0 8px 28px rgba(0,0,0,.12);
+    --radius: 12px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #14171c; --surface: #1d2127; --surface-2: #262b33; --border: #333a45;
+      --text: #e6e8ec; --muted: #9aa1ad; --today: #3a3117; --today-border: #d9a520;
+      --sun: #ff7b7b; --sat: #7fa9ff; --other-month: #4a515c; --shadow: 0 8px 28px rgba(0,0,0,.5);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #14171c; --surface: #1d2127; --surface-2: #262b33; --border: #333a45;
+    --text: #e6e8ec; --muted: #9aa1ad; --today: #3a3117; --today-border: #d9a520;
+    --sun: #ff7b7b; --sat: #7fa9ff; --other-month: #4a515c; --shadow: 0 8px 28px rgba(0,0,0,.5);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", "Noto Sans KR", "Malgun Gothic", sans-serif;
+    line-height: 1.5; padding: 16px;
+  }
+  .wrap { max-width: 1100px; margin: 0 auto; }
+
+  header { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 8px 16px; margin-bottom: 14px; }
+  header h1 { font-size: 22px; margin: 0; letter-spacing: -.01em; }
+  header h1 small { display: block; font-size: 13px; font-weight: 500; color: var(--muted); margin-top: 2px; }
+  .updated { font-size: 13px; color: var(--muted); }
+  .updated b { color: var(--text); font-weight: 600; }
+
+  .toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 12px; }
+  .months { display: flex; gap: 4px; flex-wrap: wrap; }
+  .months button, .nav button, .view-toggle button {
+    background: var(--surface); color: var(--text); border: 1px solid var(--border);
+    border-radius: 8px; padding: 6px 12px; font-size: 14px; cursor: pointer;
+  }
+  .months button.active { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
+  .nav { display: flex; gap: 4px; margin-left: auto; }
+  .nav button:disabled { opacity: .4; cursor: default; }
+  .view-toggle button.active { background: var(--surface-2); font-weight: 600; }
+
+  .filters { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+  .filters label {
+    display: inline-flex; align-items: center; gap: 6px; font-size: 13px; cursor: pointer;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: 4px 10px 4px 8px; user-select: none;
+  }
+  .filters label.off { opacity: .45; }
+  .filters .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+  .filters input { display: none; }
+
+  .month-note {
+    background: var(--surface); border: 1px dashed var(--border); border-left: 4px solid var(--today-border);
+    border-radius: 8px; padding: 10px 12px; font-size: 13px; color: var(--muted); margin-bottom: 12px;
+  }
+
+  .calendar { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+  .weekdays, .week { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); }
+  .weekdays div { text-align: center; padding: 8px 0; font-size: 13px; font-weight: 600; color: var(--muted); background: var(--surface-2); border-bottom: 1px solid var(--border); }
+  .weekdays div:first-child { color: var(--sun); }
+  .weekdays div:last-child { color: var(--sat); }
+  .week { border-bottom: 1px solid var(--border); }
+  .week:last-child { border-bottom: none; }
+  .day {
+    min-height: 108px; padding: 6px; border-right: 1px solid var(--border); cursor: pointer;
+    display: flex; flex-direction: column; gap: 3px; transition: background .12s;
+  }
+  .day:last-child { border-right: none; }
+  .day:hover { background: var(--surface-2); }
+  .day.other { color: var(--other-month); cursor: default; background: transparent; }
+  .day.other:hover { background: transparent; }
+  .day.today { background: var(--today); box-shadow: inset 0 0 0 2px var(--today-border); }
+  .day.has-events .num { font-weight: 700; }
+  .num { font-size: 13px; line-height: 1; margin-bottom: 2px; display: flex; justify-content: space-between; align-items: center; }
+  .num .badge { font-size: 10px; background: var(--accent); color: #fff; border-radius: 999px; padding: 1px 6px; font-weight: 600; }
+  .day.sun .num { color: var(--sun); }
+  .day.sat .num { color: var(--sat); }
+  .day.other .num { color: var(--other-month); }
+
+  .chip {
+    font-size: 11px; line-height: 1.3; padding: 2px 6px; border-radius: 5px; color: #fff;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: pointer;
+    border-left: 3px solid rgba(0,0,0,.25);
+  }
+  .chip.range { opacity: .75; font-size: 10.5px; padding: 1px 6px; }
+  .chip.cont { border-radius: 0 5px 5px 0; }
+  .chip.ended { text-decoration: line-through; opacity: .55; }
+  .chip:hover { filter: brightness(1.08); }
+  .more { font-size: 11px; color: var(--muted); padding-left: 4px; }
+
+  /* list view (mobile / toggle) */
+  .list { display: none; flex-direction: column; gap: 10px; }
+  .list .item { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; cursor: pointer; display: grid; grid-template-columns: 64px 1fr; gap: 12px; }
+  .list .item:hover { background: var(--surface-2); }
+  .list .date { text-align: center; }
+  .list .date .d { font-size: 22px; font-weight: 700; line-height: 1; }
+  .list .date .w { font-size: 12px; color: var(--muted); }
+  .list .date.sun .d { color: var(--sun); } .list .date.sat .d { color: var(--sat); }
+  .list .t { font-weight: 600; font-size: 15px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+  .list .meta { font-size: 13px; color: var(--muted); }
+  .list .empty { color: var(--muted); text-align: center; padding: 30px 0; }
+  .tag { display: inline-block; font-size: 11px; color: #fff; border-radius: 4px; padding: 1px 6px; font-weight: 600; }
+  body.view-list .calendar { display: none; }
+  body.view-list .list { display: flex; }
+
+  /* modal */
+  .overlay { position: fixed; inset: 0; background: rgba(0,0,0,.45); display: none; align-items: center; justify-content: center; padding: 16px; z-index: 50; }
+  .overlay.open { display: flex; }
+  .modal { background: var(--surface); color: var(--text); width: 100%; max-width: 640px; max-height: 90vh; overflow: auto; border-radius: 14px; box-shadow: var(--shadow); }
+  .modal-head { position: sticky; top: 0; background: var(--surface); padding: 16px 20px 10px; border-bottom: 1px solid var(--border); display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; z-index: 1; }
+  .modal-head h2 { margin: 0; font-size: 18px; }
+  .modal-head .sub { font-size: 13px; color: var(--muted); margin-top: 2px; }
+  .close { background: none; border: none; font-size: 22px; line-height: 1; color: var(--muted); cursor: pointer; padding: 2px 6px; }
+  .modal-body { padding: 8px 20px 20px; }
+  .ev { padding: 14px 0; border-bottom: 1px solid var(--border); }
+  .ev:last-child { border-bottom: none; }
+  .ev h3 { margin: 0 0 4px; font-size: 16px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .ev .status { font-size: 11px; border: 1px solid var(--border); color: var(--muted); border-radius: 4px; padding: 0 6px; }
+  .ev .summary { margin: 4px 0 8px; font-size: 14px; }
+  .kv { display: grid; grid-template-columns: 64px 1fr; gap: 4px 10px; font-size: 13.5px; }
+  .kv dt { color: var(--muted); margin: 0; }
+  .kv dd { margin: 0; }
+  .ev ul { margin: 6px 0 0; padding-left: 18px; font-size: 13.5px; }
+  .ev ul li { margin: 2px 0; }
+  .ev .note { margin-top: 8px; font-size: 12.5px; color: var(--muted); background: var(--surface-2); padding: 6px 10px; border-radius: 6px; }
+  .src { margin-top: 8px; font-size: 12.5px; }
+  .src a { color: var(--accent); text-decoration: none; margin-right: 10px; }
+  .src a:hover { text-decoration: underline; }
+  .none { color: var(--muted); font-size: 14px; padding: 20px 0; text-align: center; }
+  .error { background: #ffe8e6; color: #8a1f11; border: 1px solid #f3b5ae; padding: 12px 14px; border-radius: 8px; margin-bottom: 12px; font-size: 14px; }
+  :root[data-theme="dark"] .error { background: #3a1f1b; color: #ffb4a8; border-color: #6b2f28; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .error { background: #3a1f1b; color: #ffb4a8; border-color: #6b2f28; } }
+
+  footer { margin-top: 16px; font-size: 12.5px; color: var(--muted); }
+  footer code { background: var(--surface-2); padding: 1px 5px; border-radius: 4px; }
+
+  @media (max-width: 720px) {
+    body { padding: 12px 16px; }
+    header h1 { font-size: 19px; }
+    .day { min-height: 64px; padding: 4px; }
+    .chip { display: none; }
+    .day .dots { display: flex; gap: 3px; flex-wrap: wrap; }
+    .day .dots i { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
+    .kv { grid-template-columns: 56px 1fr; }
+  }
+  @media (min-width: 721px) { .day .dots { display: none; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>청라호수공원 행사 달력
+      <small>인천 서해구 청라국제도시 · 2026년 8월 ~ 12월</small>
+    </h1>
+    <div class="updated" id="updated"></div>
+  </header>
+
+  <div id="error"></div>
+
+  <div class="toolbar">
+    <div class="months" id="months"></div>
+    <div class="view-toggle">
+      <button id="btnCal" class="active" type="button">달력</button>
+      <button id="btnList" type="button">목록</button>
+    </div>
+    <div class="nav">
+      <button id="prev" type="button" aria-label="이전 달">‹</button>
+      <button id="next" type="button" aria-label="다음 달">›</button>
+    </div>
+  </div>
+
+  <div class="filters" id="filters"></div>
+  <div class="month-note" id="monthNote" hidden></div>
+
+  <div class="calendar" id="calendar">
+    <div class="weekdays">
+      <div>일</div><div>월</div><div>화</div><div>수</div><div>목</div><div>금</div><div>토</div>
+    </div>
+    <div id="weeks"></div>
+  </div>
+
+  <div class="list" id="list"></div>
+
+  <footer>
+    데이터: <code>data/config.json</code> + 월별 <code>data/YYYY-MM.json</code>. 월 파일에 행사를 추가하고 새로 고치면 달력에 반영됩니다.
+    날짜 칸 또는 행사 칩을 클릭하면 상세 내용이 표시됩니다. 취소선은 이미 종료된 행사입니다.
+  </footer>
+</div>
+
+<div class="overlay" id="overlay" role="dialog" aria-modal="true">
+  <div class="modal">
+    <div class="modal-head">
+      <div>
+        <h2 id="mTitle"></h2>
+        <div class="sub" id="mSub"></div>
+      </div>
+      <button class="close" id="mClose" type="button" aria-label="닫기">×</button>
+    </div>
+    <div class="modal-body" id="mBody"></div>
+  </div>
+</div>
+
+<script>
+const DATA_DIR = 'data/';   // config.json 과 YYYY-MM.json 이 있는 경로 (Object Storage 도 같은 구조)
+
+async function loadData() {
+  const bust = '?t=' + Date.now();
+  const res = await fetch(DATA_DIR + 'config.json' + bust, { cache: 'no-store' });
+  if (!res.ok) throw new Error('config.json HTTP ' + res.status);
+  const config = await res.json();
+  const months = [];
+  let [y, m] = config.range.start.split('-').map(Number);
+  const [ey, em] = config.range.end.split('-').map(Number);
+  while (y < ey || (y === ey && m <= em)) { months.push(y + '-' + String(m).padStart(2, '0')); m++; if (m > 12) { m = 1; y++; } }
+  const files = await Promise.all(months.map(async (mm) => {
+    try {
+      const r = await fetch(DATA_DIR + mm + '.json' + bust, { cache: 'no-store' });
+      if (!r.ok) return [];                       // 파일이 없는 달은 빈 달로 처리
+      const j = await r.json();
+      return Array.isArray(j.events) ? j.events : [];
+    } catch (e) { return []; }
+  }));
+  return { ...config, months, events: files.flat() };
+}
+
+loadData().then(init).catch((err) => {
+  const isFile = location.protocol === 'file:';
+  document.querySelector('#error').innerHTML = '<div class="error"><b>데이터를 불러오지 못했습니다.</b> (' + String(err.message || err).replace(/[<>]/g, '') + ')<br>' +
+    (isFile
+      ? 'file:// 로 직접 열면 브라우저가 JSON 읽기를 차단합니다. 이 폴더에서 <code>python3 -m http.server 8765</code> 실행 후 <code>http://localhost:8765</code> 로 열거나, Object Storage 정적 호스팅 주소로 접속하세요.'
+      : '<code>data/config.json</code> 과 <code>data/YYYY-MM.json</code> 파일이 index.html 과 같은 위치에 있는지 확인하세요.') + '</div>';
+});
+
+function init(DATA) {
+  const $ = (s) => document.querySelector(s);
+  const WEEK = ['일', '월', '화', '수', '목', '금', '토'];
+
+  const cats = DATA.categories || {};
+  const enabled = new Set(Object.keys(cats));
+  const pad = (n) => String(n).padStart(2, '0');
+  const ymd = (d) => d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
+  const parse = (s) => { const [y, m, d] = s.split('-').map(Number); return new Date(y, m - 1, d); };
+  const todayStr = ymd(new Date());
+
+  const months = DATA.months;
+  let current = months.includes(todayStr.slice(0, 7)) ? todayStr.slice(0, 7) : months[0];
+
+  // normalize events
+  const seen = new Set();
+  const events = DATA.events.filter((e) => e && e.id && !seen.has(e.id) && seen.add(e.id)).map((e) => ({
+    ...e,
+    end: e.end || e.start,
+    status: e.status || (((e.end || e.start) < todayStr) ? 'ended' : 'confirmed'),
+  }));
+  const color = (e) => (cats[e.category] && cats[e.category].color) || '#666';
+  const label = (e) => (cats[e.category] && cats[e.category].label) || e.category || '';
+  const onDay = (e, day) => e.start <= day && day <= e.end;
+  const isRange = (e) => e.end !== e.start;
+  const visible = (e) => enabled.has(e.category);
+  const eventsOn = (day) => events.filter((e) => visible(e) && onDay(e, day))
+    .sort((a, b) => (isRange(a) - isRange(b)) || (a.time || '').localeCompare(b.time || ''));
+
+  $('#updated').innerHTML = '최종 업데이트 <b>' + (DATA.updatedAt || '-') + '</b>';
+
+  // month tabs
+  const monthsEl = $('#months');
+  months.forEach((m) => {
+    const b = document.createElement('button');
+    b.type = 'button'; b.textContent = Number(m.slice(5)) + '월'; b.dataset.m = m;
+    b.onclick = () => { current = m; render(); };
+    monthsEl.appendChild(b);
+  });
+  $('#prev').onclick = () => { const i = months.indexOf(current); if (i > 0) { current = months[i - 1]; render(); } };
+  $('#next').onclick = () => { const i = months.indexOf(current); if (i < months.length - 1) { current = months[i + 1]; render(); } };
+
+  // filters
+  const filtersEl = $('#filters');
+  Object.entries(cats).forEach(([k, c]) => {
+    const l = document.createElement('label');
+    l.innerHTML = '<input type="checkbox" checked><span class="dot" style="background:' + c.color + '"></span>' + c.label;
+    l.querySelector('input').onchange = (ev) => { ev.target.checked ? enabled.add(k) : enabled.delete(k); l.classList.toggle('off', !ev.target.checked); render(); };
+    filtersEl.appendChild(l);
+  });
+
+  // view toggle
+  $('#btnCal').onclick = () => { document.body.classList.remove('view-list'); $('#btnCal').classList.add('active'); $('#btnList').classList.remove('active'); };
+  $('#btnList').onclick = () => { document.body.classList.add('view-list'); $('#btnList').classList.add('active'); $('#btnCal').classList.remove('active'); };
+
+  function render() {
+    monthsEl.querySelectorAll('button').forEach((b) => b.classList.toggle('active', b.dataset.m === current));
+    $('#prev').disabled = months.indexOf(current) === 0;
+    $('#next').disabled = months.indexOf(current) === months.length - 1;
+
+    const note = DATA.monthNotes && DATA.monthNotes[current];
+    $('#monthNote').hidden = !note;
+    $('#monthNote').textContent = note || '';
+
+    renderCalendar();
+    renderList();
+  }
+
+  function renderCalendar() {
+    const [y, m] = current.split('-').map(Number);
+    const first = new Date(y, m - 1, 1);
+    const start = new Date(first); start.setDate(1 - first.getDay());
+    const weeksEl = $('#weeks'); weeksEl.innerHTML = '';
+    const MAX = 3;
+
+    for (let w = 0; w < 6; w++) {
+      const weekEl = document.createElement('div'); weekEl.className = 'week';
+      let anyThisMonth = false;
+      for (let d = 0; d < 7; d++) {
+        const date = new Date(start); date.setDate(start.getDate() + w * 7 + d);
+        const key = ymd(date);
+        const other = date.getMonth() !== m - 1;
+        if (!other) anyThisMonth = true;
+        const cell = document.createElement('div');
+        cell.className = 'day' + (other ? ' other' : '') + (d === 0 ? ' sun' : '') + (d === 6 ? ' sat' : '') + (key === todayStr ? ' today' : '');
+        const list = other ? [] : eventsOn(key);
+        if (list.length) cell.classList.add('has-events');
+
+        const num = document.createElement('div'); num.className = 'num';
+        num.innerHTML = '<span>' + date.getDate() + '</span>' + (list.length ? '<span class="badge">' + list.length + '</span>' : '');
+        cell.appendChild(num);
+
+        const dots = document.createElement('div'); dots.className = 'dots';
+        list.forEach((e) => { const i = document.createElement('i'); i.style.background = color(e); dots.appendChild(i); });
+        cell.appendChild(dots);
+
+        list.slice(0, MAX).forEach((e) => {
+          const chip = document.createElement('div');
+          chip.className = 'chip' + (isRange(e) ? ' range' : '') + (isRange(e) && e.start < key ? ' cont' : '') + (e.status === 'ended' ? ' ended' : '');
+          chip.style.background = color(e);
+          chip.textContent = isRange(e) ? (e.short || e.title) : ((e.time ? e.time.split(/[~\s]/)[0] + ' ' : '') + (e.short || e.title));
+          chip.title = e.title;
+          chip.onclick = (ev) => { ev.stopPropagation(); openDay(key, e.id); };
+          cell.appendChild(chip);
+        });
+        if (list.length > MAX) {
+          const more = document.createElement('div'); more.className = 'more'; more.textContent = '+' + (list.length - MAX) + '건 더보기';
+          cell.appendChild(more);
+        }
+        if (!other) cell.onclick = () => openDay(key);
+        weekEl.appendChild(cell);
+      }
+      if (!anyThisMonth) break;
+      weeksEl.appendChild(weekEl);
+    }
+  }
+
+  function renderList() {
+    const listEl = $('#list'); listEl.innerHTML = '';
+    const [y, m] = current.split('-').map(Number);
+    const days = new Date(y, m, 0).getDate();
+    let count = 0;
+    for (let d = 1; d <= days; d++) {
+      const key = current + '-' + pad(d);
+      const list = eventsOn(key).filter((e) => !isRange(e) || e.start === key || d === 1);
+      list.forEach((e) => {
+        count++;
+        const date = parse(key);
+        const item = document.createElement('div'); item.className = 'item';
+        const wd = date.getDay();
+        item.innerHTML =
+          '<div class="date' + (wd === 0 ? ' sun' : wd === 6 ? ' sat' : '') + '"><div class="d">' + d + '</div><div class="w">' + WEEK[wd] + (isRange(e) ? '<br>~' + e.end.slice(5).replace('-', '/') : '') + '</div></div>' +
+          '<div><div class="t"><span class="tag" style="background:' + color(e) + '">' + label(e) + '</span>' + esc(e.title) + (e.status === 'ended' ? ' <span class="status">종료</span>' : '') + '</div>' +
+          '<div class="meta">' + [e.time, e.place].filter(Boolean).map(esc).join(' · ') + '</div>' +
+          (e.summary ? '<div class="meta" style="margin-top:2px;color:var(--text)">' + esc(e.summary) + '</div>' : '') + '</div>';
+        item.onclick = () => openDay(key, e.id);
+        listEl.appendChild(item);
+      });
+    }
+    if (!count) listEl.innerHTML = '<div class="empty">이 달에 표시할 행사가 없습니다.</div>';
+  }
+
+  // modal
+  function openDay(key, focusId) {
+    const list = eventsOn(key);
+    const date = parse(key);
+    $('#mTitle').textContent = date.getMonth() + 1 + '월 ' + date.getDate() + '일 (' + WEEK[date.getDay()] + ')';
+    $('#mSub').textContent = list.length ? list.length + '건의 행사' : '';
+    const body = $('#mBody'); body.innerHTML = '';
+    if (!list.length) body.innerHTML = '<div class="none">이 날짜에 등록된 행사가 없습니다.</div>';
+    list.forEach((e) => body.appendChild(renderEvent(e)));
+    $('#overlay').classList.add('open');
+    if (focusId) { const el = body.querySelector('[data-id="' + focusId + '"]'); if (el) setTimeout(() => el.scrollIntoView({ block: 'start', behavior: 'smooth' }), 30); }
+  }
+  function renderEvent(e) {
+    const div = document.createElement('div'); div.className = 'ev'; div.dataset.id = e.id;
+    const period = isRange(e) ? e.start.replace(/-/g, '.') + ' ~ ' + e.end.replace(/-/g, '.') : e.start.replace(/-/g, '.');
+    const statusLabel = { ended: '종료', tentative: '예정(미확정)', confirmed: '' }[e.status] || '';
+    let html = '<h3><span class="tag" style="background:' + color(e) + '">' + label(e) + '</span>' + esc(e.title) + (statusLabel ? '<span class="status">' + statusLabel + '</span>' : '') + '</h3>';
+    if (e.summary) html += '<p class="summary">' + esc(e.summary) + '</p>';
+    html += '<dl class="kv">';
+    html += kv('일정', period + (e.time ? ' · ' + esc(e.time) : ''));
+    html += kv('장소', e.place); html += kv('주최', e.host); html += kv('요금', e.fee); html += kv('문의', e.contact);
+    html += '</dl>';
+    if (e.details && e.details.length) html += '<ul>' + e.details.map((d) => '<li>' + esc(d) + '</li>').join('') + '</ul>';
+    if (e.note) html += '<div class="note">※ ' + esc(e.note) + '</div>';
+    if (e.sources && e.sources.length) html += '<div class="src">출처: ' + e.sources.map((s) => '<a href="' + esc(s.url) + '" target="_blank" rel="noopener">' + esc(s.label || s.url) + '</a>').join('') + '</div>';
+    div.innerHTML = html;
+    return div;
+  }
+  const kv = (k, v) => v ? '<dt>' + k + '</dt><dd>' + (k === '일정' ? v : esc(v)) + '</dd>' : '';
+  function esc(s) { return String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
+
+  $('#mClose').onclick = () => $('#overlay').classList.remove('open');
+  $('#overlay').onclick = (ev) => { if (ev.target === ev.currentTarget) ev.currentTarget.classList.remove('open'); };
+  document.addEventListener('keydown', (ev) => { if (ev.key === 'Escape') $('#overlay').classList.remove('open'); });
+
+  render();
+}
+</script>
+</body>
+</html>

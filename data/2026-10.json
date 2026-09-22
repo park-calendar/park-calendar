@@ -1,0 +1,54 @@
+{
+  "month": "2026-10",
+  "events": [
+    {
+      "id": "fountain-last-day",
+      "title": "음악분수 2026 시즌 마지막 운영일",
+      "category": "regular",
+      "start": "2026-10-04",
+      "time": "주간 12:20~13:00 · 야간 20:00~",
+      "place": "청라호수공원 음악분수",
+      "summary": "10월 4일(일) 이후 동절기 휴무. 2027년 봄 재가동 예정.",
+      "sources": [
+        {
+          "label": "브릿지경제 2026-04-28",
+          "url": "https://www.viva100.com/article/20260428500199"
+        }
+      ]
+    },
+    {
+      "id": "ifesta-cheongna-2026",
+      "title": "I♥FEsta 청라 × 청라페스티벌 (2026 IFEZ 글로벌 페스티벌)",
+      "category": "festival",
+      "start": "2026-10-24",
+      "time": "14:00~21:00 (메인 공연 19:00~)",
+      "place": "청라호수공원",
+      "host": "인천경제자유구역청 (인천관광공사 플랫폼 연계)",
+      "summary": "테마 'K-OST'. 영화·드라마 OST 콘서트, K-영상콘텐츠 체험, 청라페스티벌 연계 와인 시음·소믈리에 강연.",
+      "details": [
+        "송도(9/12 K-STAGE) → 영종(10/10 K-BEAT) → 청라(10/24 K-OST) 릴레이 축제의 피날레",
+        "명품 OST 콘서트 – 가을밤 낭만 콘셉트",
+        "K-드라마·댄스 인터랙티브 영상 체험",
+        "청라페스티벌 연계: 와인 시음, 소믈리에 강연, 푸드 페어링",
+        "I♥FEsta 모바일 PASS 운영 – 3개 도시 방문 기록 연결, 지역 상권 할인쿠폰 제공",
+        "출연진·세부 프로그램은 순차 공개 예정 (인스타그램 @ifezfesta)"
+      ],
+      "fee": "무료 (예정)",
+      "sources": [
+        {
+          "label": "더인천 2026-09-04",
+          "url": "https://www.theicn.co.kr/news/articleView.html?idxno=11101"
+        },
+        {
+          "label": "디지털타임스",
+          "url": "https://www.dt.co.kr/article/12081645"
+        },
+        {
+          "label": "IFEZ 축제/행사",
+          "url": "https://www.ifez.go.kr/main/culture/event/list.do"
+        }
+      ],
+      "note": "출연진 등 세부 내용은 공개되는 대로 갱신 필요"
+    }
+  ]
+}

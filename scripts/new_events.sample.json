@@ -1,0 +1,24 @@
+{
+  "events": [
+    {
+      "title": "행사명 (예시)",
+      "short": "달력 칩용 짧은 이름 (선택)",
+      "category": "festival",
+      "start": "2026-11-07",
+      "end": "2026-11-08",
+      "time": "14:00~20:00",
+      "place": "청라호수공원 야외음악당",
+      "host": "주최/주관",
+      "summary": "한 줄 요약",
+      "details": ["세부 항목 1", "세부 항목 2"],
+      "fee": "무료",
+      "contact": "032-000-0000",
+      "status": "tentative",
+      "sources": [{ "label": "출처명 YYYY-MM-DD", "url": "https://example.com/article" }],
+      "note": "비고"
+    }
+  ],
+  "monthNotes": {
+    "2026-11": "11월 행사 안내 문구 (선택, 없으면 생략)"
+  }
+}
