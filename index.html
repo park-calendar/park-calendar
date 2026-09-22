@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>인천 공원 행사 달력</title>
 <meta name="description" content="인천 주요 공원의 행사 일정을 달력으로 확인합니다.">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" crossorigin="">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" crossorigin=""></script>
 <style>
   :root {
     --bg: #f4f5f7;
@@ -73,6 +75,15 @@
   .park-menu button:hover { background: var(--surface-2); }
   .park-menu button.active { background: var(--accent); color: #fff; }
   .park-menu button .sub { display: block; font-size: 12px; opacity: .72; margin-top: 1px; }
+  .headright { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+  .infobtn {
+    display: inline-flex; align-items: center; gap: 7px; cursor: pointer;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+    padding: 7px 13px; font-size: 13.5px; color: var(--text); font-weight: 600;
+  }
+  .infobtn:hover { border-color: var(--accent); color: var(--accent); }
+  .infobtn[hidden] { display: none; }
+  .infobtn svg { width: 15px; height: 15px; flex: none; }
   .updated { font-size: 13px; color: var(--muted); }
   .updated b { color: var(--text); font-weight: 600; }
 
@@ -225,6 +236,33 @@
   .src a:hover { text-decoration: underline; }
   .none { color: var(--muted); font-size: 14px; padding: 24px 0; text-align: center; }
 
+  /* ---------- 공원 안내 / 지도 ---------- */
+  .modal.wide { max-width: 880px; }
+  .ov { font-size: 14px; margin: 0 0 10px; }
+  .ovkv { display: grid; grid-template-columns: 64px 1fr; gap: 4px 10px; font-size: 13.5px; margin-bottom: 12px; }
+  .ovkv dt { color: var(--muted); margin: 0; } .ovkv dd { margin: 0; }
+  .maparea { display: grid; grid-template-columns: 1fr 260px; gap: 12px; }
+  #map { height: 420px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface-2); }
+  .leaflet-container { font: inherit; background: var(--surface-2); }
+  .facpanel { max-height: 420px; overflow: auto; display: flex; flex-direction: column; gap: 6px; }
+  .facpanel button {
+    text-align: left; background: var(--surface-2); border: 1px solid transparent; border-radius: 8px;
+    padding: 8px 10px; cursor: pointer; color: var(--text); font-size: 13px; line-height: 1.35;
+  }
+  .facpanel button:hover { border-color: var(--accent); }
+  .facpanel button.active { background: var(--accent); color: #fff; }
+  .facpanel button .cat { display: block; font-size: 11px; opacity: .72; margin-top: 1px; }
+  .facdetail { margin-top: 12px; border-top: 1px solid var(--border); padding-top: 12px; }
+  .facdetail h3 { margin: 0 0 4px; font-size: 16px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .facdetail .est { font-size: 11px; color: var(--muted); border: 1px solid var(--border); border-radius: 4px; padding: 0 5px; }
+  .facdetail ul { margin: 6px 0 0; padding-left: 18px; font-size: 13.5px; }
+  .maphint { font-size: 12.5px; color: var(--muted); margin-top: 8px; }
+  @media (max-width: 760px) {
+    .maparea { grid-template-columns: 1fr; }
+    #map { height: 300px; }
+    .facpanel { max-height: 190px; }
+  }
+
   .error { background: #ffe8e6; color: #8a1f11; border: 1px solid #f3b5ae; padding: 12px 14px; border-radius: 8px; margin-bottom: 12px; font-size: 14px; }
   :root[data-theme="dark"] .error { background: #3a1f1b; color: #ffb4a8; border-color: #6b2f28; }
   @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .error { background: #3a1f1b; color: #ffb4a8; border-color: #6b2f28; } }
@@ -255,7 +293,14 @@
       <div class="park-menu" id="parkMenu" role="listbox" hidden></div>
       <div class="loc" id="parkLoc"></div>
     </div>
-    <div class="updated" id="updated"></div>
+    <div class="headright">
+      <button class="infobtn" id="infoBtn" type="button" hidden>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M13.5 6.8c0 3.6-5.5 8-5.5 8s-5.5-4.4-5.5-8a5.5 5.5 0 1 1 11 0Z"/><circle cx="8" cy="6.6" r="1.9"/>
+        </svg><span id="infoBtnLabel">공원 안내</span>
+      </button>
+      <div class="updated" id="updated"></div>
+    </div>
   </header>
 
   <div id="error"></div>
@@ -303,6 +348,19 @@
   </div>
 
   <div class="list" id="list"></div>
+</div>
+
+<div class="overlay" id="infoOverlay" role="dialog" aria-modal="true">
+  <div class="modal wide">
+    <div class="modal-head">
+      <div>
+        <h2 id="iTitle">공원 안내</h2>
+        <div class="sub" id="iSub"></div>
+      </div>
+      <button class="close" id="iClose" type="button" aria-label="닫기">×</button>
+    </div>
+    <div class="modal-body" id="iBody"></div>
+  </div>
 </div>
 
 <div class="overlay" id="overlay" role="dialog" aria-modal="true">
@@ -482,8 +540,8 @@ function init(CONFIG) {
   }
   document.addEventListener('click', closeAllPopovers);
   document.addEventListener('keydown', (ev) => {
-    if (ev.key === 'Escape') { closeAllPopovers(); $('#overlay').classList.remove('open'); }
-    if ($('#overlay').classList.contains('open')) return;
+    if (ev.key === 'Escape') { closeAllPopovers(); $('#overlay').classList.remove('open'); infoOverlay.classList.remove('open'); }
+    if ($('#overlay').classList.contains('open') || infoOverlay.classList.contains('open')) return;
     if (ev.key === 'ArrowLeft') goMonth(shiftMonth(current, -1));
     if (ev.key === 'ArrowRight') goMonth(shiftMonth(current, 1));
   });
@@ -529,6 +587,110 @@ function init(CONFIG) {
   }
   try { if (localStorage.getItem('view') === 'list') setView('list'); } catch (e) { /* 무시 */ }
 
+  /* ---------- 공원 안내 · 지도 ---------- */
+  let facData = null, map = null, markers = {}, selectedFac = null;
+
+  async function loadFacilities(parkId) {
+    try {
+      const r = await fetch(DATA_DIR + parkId + '/facilities.json?t=' + Date.now(), { cache: 'no-store' });
+      if (!r.ok) return null;
+      const j = await r.json();
+      return (j && Array.isArray(j.facilities) && j.facilities.length) ? j : null;
+    } catch (e) { return null; }
+  }
+
+  const infoOverlay = $('#infoOverlay');
+  $('#iClose').onclick = () => infoOverlay.classList.remove('open');
+  infoOverlay.onclick = (ev) => { if (ev.target === ev.currentTarget) ev.currentTarget.classList.remove('open'); };
+  $('#infoBtn').onclick = () => openInfo();
+
+  function openInfo() {
+    if (!facData) return;
+    const o = facData.overview || {};
+    $('#iTitle').textContent = facData.name || park.name;
+    $('#iSub').textContent = facData.address || park.location || '';
+
+    let html = '';
+    if (o.summary) html += '<p class="ov">' + esc(o.summary) + '</p>';
+    html += '<dl class="ovkv">';
+    html += kv('면적', o.area); html += kv('개방', o.hours); html += kv('입장료', o.fee); html += kv('문의', o.contact);
+    if (o.transport && o.transport.length) html += '<dt>교통</dt><dd>' + o.transport.map(esc).join('<br>') + '</dd>';
+    html += '</dl>';
+    if (o.note) html += '<div class="note" style="margin:0 0 12px">※ ' + esc(o.note) + '</div>';
+    html += '<div class="maparea"><div id="map"></div><div class="facpanel" id="facPanel"></div></div>';
+    html += '<div class="maphint">지도의 표시를 누르거나 오른쪽 목록에서 고르면 상세 정보가 아래에 나옵니다.</div>';
+    html += '<div class="facdetail" id="facDetail"></div>';
+    if (o.sources && o.sources.length) {
+      html += '<div class="src">출처: ' + o.sources.map((x) =>
+        '<a href="' + esc(x.url) + '" target="_blank" rel="noopener">' + esc(x.label || x.url) + '</a>').join('') + '</div>';
+    }
+    $('#iBody').innerHTML = html;
+
+    buildFacList();
+    infoOverlay.classList.add('open');
+    setTimeout(initMap, 60);   // 모달이 열린 뒤에 지도 크기를 잡는다
+  }
+
+  function buildFacList() {
+    const panel = $('#facPanel'); panel.innerHTML = '';
+    facData.facilities.forEach((f) => {
+      const b = document.createElement('button');
+      b.type = 'button'; b.dataset.id = f.id;
+      b.innerHTML = esc(f.name) + '<span class="cat">' + esc(f.category || '') + '</span>';
+      b.onclick = () => selectFac(f.id, true);
+      panel.appendChild(b);
+    });
+  }
+
+  function initMap() {
+    if (typeof L === 'undefined') {
+      $('#map').innerHTML = '<div style="padding:16px" class="loading">지도를 불러오지 못했습니다. 네트워크를 확인해 주세요.</div>';
+      return;
+    }
+    const c = facData.center || { lat: 37.535, lng: 126.65 };
+    if (map) { map.remove(); map = null; }
+    markers = {};
+    map = L.map('map', { scrollWheelZoom: false }).setView([c.lat, c.lng], facData.zoom || 15);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+
+    facData.facilities.forEach((f) => {
+      if (typeof f.lat !== 'number' || typeof f.lng !== 'number') return;
+      const m = L.marker([f.lat, f.lng], { title: f.name }).addTo(map);
+      m.bindTooltip(f.name, { direction: 'top', offset: [0, -8] });
+      m.on('click', () => selectFac(f.id, false));
+      markers[f.id] = m;
+    });
+    map.invalidateSize();
+    if (selectedFac) selectFac(selectedFac, false);
+  }
+
+  function selectFac(id, pan) {
+    selectedFac = id;
+    const f = facData.facilities.find((x) => x.id === id);
+    if (!f) return;
+    $('#facPanel').querySelectorAll('button').forEach((b) => b.classList.toggle('active', b.dataset.id === id));
+    if (pan && map && markers[id]) map.setView(markers[id].getLatLng(), Math.max(map.getZoom(), 16));
+    if (markers[id]) markers[id].openTooltip();
+
+    let html = '<h3>' + esc(f.name) +
+      (f.category ? '<span class="tag" style="background:var(--accent)">' + esc(f.category) + '</span>' : '') +
+      (f.coordSource === '추정' ? '<span class="est">위치 추정</span>' : '') + '</h3>';
+    if (f.summary) html += '<p class="summary">' + esc(f.summary) + '</p>';
+    html += '<dl class="kv">';
+    html += kv('운영', f.hours); html += kv('요금', f.fee); html += kv('문의', f.contact);
+    html += '</dl>';
+    if (f.details && f.details.length) html += '<ul>' + f.details.map((d) => '<li>' + esc(d) + '</li>').join('') + '</ul>';
+    if (f.sources && f.sources.length) {
+      html += '<div class="src">출처: ' + f.sources.map((x) =>
+        '<a href="' + esc(x.url) + '" target="_blank" rel="noopener">' + esc(x.label || x.url) + '</a>').join('') + '</div>';
+    }
+    $('#facDetail').innerHTML = html;
+    $('#facDetail').scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  }
+
   /* ---------- 공원 전환 ---------- */
   async function selectPark(p) {
     park = p;
@@ -539,6 +701,10 @@ function init(CONFIG) {
     $('#parkLoc').textContent = p.location || '';
     document.title = p.name + ' 행사 달력';
     $('#weeks').innerHTML = '<div style="padding:24px" class="loading">불러오는 중…</div>';
+    selectedFac = null; if (map) { map.remove(); map = null; }
+    facData = await loadFacilities(p.id);
+    $('#infoBtn').hidden = !facData;
+    $('#infoBtnLabel').textContent = (facData && facData.buttonLabel) || '공원 안내';
     // 등록된 범위 전체를 먼저 읽어 월 선택 표시와 기간 행사를 정확히 그린다
     if (p.range) await Promise.all(monthList(p.range).map(ensureMonth));
     await goMonth(current);
