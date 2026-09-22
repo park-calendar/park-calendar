@@ -46,7 +46,7 @@ Claude 데스크톱 앱이 켜져 있어야 하며, 꺼져 있었다면 다음 �
 
 1. **현재 데이터 내려받기**
    ```bash
-   python3 scripts/deploy_ncp.py pull --bucket pjs.test
+   python3 scripts/deploy_ncp.py pull --bucket pjs
    ```
 2. **조사**: 공원별로 아래 채널을 확인해, 등록되지 않은 행사와 내용이 바뀐 행사를 찾습니다.
 
@@ -77,7 +77,7 @@ Claude 데스크톱 앱이 켜져 있어야 하며, 꺼져 있었다면 다음 �
    두 실행의 마지막 줄이 모두 `CHANGED=0` 이면 업로드를 생략합니다.
 5. **업로드**
    ```bash
-   python3 scripts/deploy_ncp.py data --bucket pjs.test
+   python3 scripts/deploy_ncp.py data --bucket pjs
    ```
 6. **보고**: 공원별 추가·갱신 내역, 업로드 결과, 보류한 후보를 요약합니다.
 

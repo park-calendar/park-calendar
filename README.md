@@ -32,7 +32,7 @@ python3 -m http.server 8765
 ## NCP Object Storage 배포
 1. 콘솔에서 버킷 생성(암호화 없음) → 권한 관리 전체 공개 → 정적 웹 사이트 호스팅(인덱스 `index.html`)
 2. 인증키 등록: `aws configure --profile ncp` (리전 `kr-standard`)
-3. 업로드: `NCP_BUCKET=pjs.test ./scripts/deploy_ncp.sh`
-4. 데이터만 갱신할 때: `NCP_BUCKET=pjs.test ./scripts/deploy_ncp.sh data`
+3. 업로드: `NCP_BUCKET=pjs ./scripts/deploy_ncp.sh`
+4. 데이터만 갱신할 때: `NCP_BUCKET=pjs ./scripts/deploy_ncp.sh data`
 
-현재 배포 주소: https://kr.object.ncloudstorage.com/pjs.test/index.html
+현재 배포 주소: http://pjs.s3-website.kr.object.ncloudstorage.com

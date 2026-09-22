@@ -46,4 +46,4 @@ fi
 
 echo "✔ 업로드 완료"
 echo "  파일 URL : $ENDPOINT/$BUCKET/index.html"
-echo "  웹사이트 : 콘솔의 '정적 웹 사이트 호스팅' 에 표시된 버킷 웹 사이트 엔드포인트"
+echo "  웹사이트 : http://$BUCKET.s3-website.kr.object.ncloudstorage.com"

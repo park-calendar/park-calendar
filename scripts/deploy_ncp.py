@@ -8,9 +8,9 @@ NCP Object Storage 배포 (클라우드/로컬 공용, boto3 사용).
   3) AWS CLI 프로필 (NCP_PROFILE, 기본 'ncp')
 
 사용법
-  python3 scripts/deploy_ncp.py --bucket pjs.test          # index.html + data/ 업로드
-  python3 scripts/deploy_ncp.py --bucket pjs.test data     # data/ 만 업로드 (루틴용)
-  python3 scripts/deploy_ncp.py --bucket pjs.test pull     # 버킷 data/ → 로컬 data/ 내려받기
+  python3 scripts/deploy_ncp.py --bucket pjs          # index.html + data/ 업로드
+  python3 scripts/deploy_ncp.py --bucket pjs data     # data/ 만 업로드 (루틴용)
+  python3 scripts/deploy_ncp.py --bucket pjs pull     # 버킷 data/ → 로컬 data/ 내려받기
 필요 패키지: pip install boto3
 """
 import argparse, hashlib, os, sys
@@ -108,7 +108,7 @@ def main():
     if a.mode == "all":
         changed += put(s3, a.bucket, os.path.join(ROOT, "index.html"), "index.html", "text/html; charset=utf-8", a.force)
     print(f"✔ 완료: {changed}개 업로드")
-    print(f"  {ENDPOINT}/{a.bucket}/index.html")
+    print(f"  http://{a.bucket}.s3-website.kr.object.ncloudstorage.com")
 
 
 if __name__ == "__main__":
