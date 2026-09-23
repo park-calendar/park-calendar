@@ -711,7 +711,7 @@ function init(CONFIG) {
     map = new naver.maps.Map('map', {
       center: new naver.maps.LatLng(c.lat, c.lng),
       zoom: facData.zoom || 15,
-      scrollWheel: false,
+      scrollWheel: true,
       mapDataControl: false,
       logoControlOptions: { position: naver.maps.Position.BOTTOM_LEFT },
       zoomControl: true,
