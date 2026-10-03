@@ -24,17 +24,24 @@
       "time": "14:00~21:00 (메인 공연 19:00~)",
       "place": "청라호수공원",
       "host": "인천경제자유구역청 (인천관광공사 플랫폼 연계)",
-      "summary": "테마 'K-OST'. 영화·드라마 OST 콘서트, K-영상콘텐츠 체험, 청라페스티벌 연계 와인 시음·소믈리에 강연.",
+      "summary": "테마 'K-OST'. 린·조성모·거미 OST 콘서트, K-드라마 포스터·댄스 체험, 청라페스티벌 연계 와인 시음 클래스·와인 마켓.",
       "details": [
         "송도(9/12 K-STAGE) → 영종(10/10 K-BEAT) → 청라(10/24 K-OST) 릴레이 축제의 피날레",
-        "명품 OST 콘서트 – 가을밤 낭만 콘셉트",
-        "K-드라마·댄스 인터랙티브 영상 체험",
-        "청라페스티벌 연계: 와인 시음, 소믈리에 강연, 푸드 페어링",
-        "I♥FEsta 모바일 PASS 운영 – 3개 도시 방문 기록 연결, 지역 상권 할인쿠폰 제공",
-        "출연진·세부 프로그램은 순차 공개 예정 (인스타그램 @ifezfesta)"
+        "출연: 린, 조성모, 거미, 아카펠라 그룹 다이아, 원포올 빅밴드 (IFEZ 공식 안내 기준)",
+        "K-드라마 포스터 체험(생성형 AI 활용), K-댄스 체험",
+        "청라페스티벌 연계: 와인 시음 클래스, 와인 마켓, 전통술 칵테일 쇼, 미식 페어링",
+        "I♥FEsta 모바일 PASS 운영 – 3개 도시 방문 기록 연결, 지역 상권 할인쿠폰 제공"
       ],
-      "fee": "무료 (예정)",
+      "fee": "무료",
       "sources": [
+        {
+          "label": "IFEZ 축제/행사 – I♥FEsta 청라 (공식)",
+          "url": "https://www.ifez.go.kr/main/culture/event/view.do?schdl_mng_sn=18356&state=&search=VVppMi8vck9NWndkRnhPSGUySXZBZz09&menu_se=list"
+        },
+        {
+          "label": "경기신문 2026-09-30",
+          "url": "https://www.kgnews.co.kr/news/article.html?no=913509"
+        },
         {
           "label": "더인천 2026-09-04",
           "url": "https://www.theicn.co.kr/news/articleView.html?idxno=11101"
@@ -42,13 +49,11 @@
         {
           "label": "디지털타임스",
           "url": "https://www.dt.co.kr/article/12081645"
-        },
-        {
-          "label": "IFEZ 축제/행사",
-          "url": "https://www.ifez.go.kr/main/culture/event/list.do"
         }
       ],
-      "note": "출연진 등 세부 내용은 공개되는 대로 갱신 필요"
+      "note": "출연진 공개됨(2026-10-03 확인). 시간표 세부는 공식 안내 확인 권장.",
+      "contact": "인천경제자유구역청 032-453-7093",
+      "status": "confirmed"
     }
   ]
 }
