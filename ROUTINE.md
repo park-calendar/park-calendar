@@ -60,6 +60,7 @@ Claude 데스크톱 앱이 켜져 있어야 하며, 꺼져 있었다면 다음 �
    - 서구 전체행사 https://www.seohae.go.kr/open_content/festival/sub/event_all.jsp?view=2
    - 인천서구문화재단 https://www.iscf.kr/_new/html/event/festival.php
    - 청라닷컴 행사소식 https://www.cheongna.com/server/bbs/board.php?bo_table=sub_05_03
+   - **동 행정복지센터 동소식** (청라1·2·3동) `https://www.seohae.go.kr/open_content/dong/bbs/bbsMsgList.do?cate1=cheongna1&bcd=dongnotice&dong=cheongna1` — `cate1`·`dong` 값을 cheongna2, cheongna3 으로 바꿔 확인
 
    송도 센트럴파크
    - 인천시설공단 송도공원 https://www.insiseol.or.kr/park/songdo/
@@ -106,6 +107,8 @@ Claude 데스크톱 앱이 켜져 있어야 하며, 꺼져 있었다면 다음 �
 - 장소가 공원 내부인 행사만 일반 카테고리로 넣고(청라는 **커널웨이 일원도 공원 내부로 취급**합니다. 상인연합회 등 민간 주관 행사가 많아 공식 목록에 잘 안 올라오므로 검색으로 확인하세요), 공원 밖이지만 해당 지역에 영향이 큰 행사는 `nearby` 로 넣습니다.
 - 이미 등록된 행사는 실제로 바뀐 내용이 있을 때만 같은 `id` 로 바뀐 필드만 갱신합니다.
 - 확정되지 않은 일정은 `status: "tentative"`.
+- **주민 주도 축제는 동 공지에만 올라옵니다.** 뉴스와 공식 축제 목록에는 안 나오므로 동소식 게시판을 반드시 확인합니다.
+- **공지 본문이 비고 포스터 이미지만 첨부된 경우가 흔합니다.** 제목에 행사명이 보이면 첨부 포스터를 내려받아 일시·장소·프로그램을 읽습니다. 첨부 링크는 본문 HTML 의 `bbsMsgFileDown.do` 입니다.
 - **행사가 없다는 안내(monthNotes)는 쓰지 않습니다.** "확인되지 않았습니다" 같은 문구는 보는 사람에게 도움이 되지 않습니다. 빈 달은 비워 두세요. monthNotes 는 공원 폐쇄·공사·장소 변경처럼 방문자가 실제로 알아야 할 일이 있을 때만 씁니다.
 
 ## 알려진 함정: PutObject AccessDenied
