@@ -1,4 +1,37 @@
 {
   "month": "2026-11",
-  "events": []
+  "events": [
+    {
+      "title": "인천아트쇼 2026",
+      "short": "인천아트쇼 2026",
+      "category": "nearby",
+      "start": "2026-11-19",
+      "end": "2026-11-22",
+      "time": "11:00~19:00 (입장 마감 18:00)",
+      "place": "송도컨벤시아 2·3·4홀 (센트럴파크 인접)",
+      "host": "인천아트쇼 2026",
+      "summary": "제6회 인천아트쇼(아트페어)로 4일간 송도컨벤시아에서 열립니다. 공원 밖이지만 센트럴파크 인근 주차·교통이 혼잡할 수 있습니다.",
+      "details": [
+        "올해 키워드 '컨택트(Contact)', 총 161개 부스 규모",
+        "기업·작가 매칭 프로그램 〈Contact Artist〉 운영",
+        "유료 입장(예매처 NOL 티켓)"
+      ],
+      "status": "confirmed",
+      "sources": [
+        {
+          "label": "아이뉴스24 2026-10-30",
+          "url": "https://www.inews24.com/view/2020589"
+        },
+        {
+          "label": "인천아트쇼 공식 사이트",
+          "url": "https://iartshow.imweb.me/"
+        },
+        {
+          "label": "NOL 티켓 예매 페이지",
+          "url": "https://nol.yanolja.com/ticket/products/26013634"
+        }
+      ],
+      "id": "2026-11-19-인천아트쇼-2026"
+    }
+  ]
 }
