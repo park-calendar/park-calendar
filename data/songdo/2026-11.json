@@ -2,6 +2,35 @@
   "month": "2026-11",
   "events": [
     {
+      "title": "2026 인천 공정무역 페스티벌",
+      "short": "공정무역 페스티벌",
+      "category": "festival",
+      "start": "2026-11-14",
+      "time": "11:00~17:30 (특설무대 13:30~)",
+      "place": "송도 센트럴파크 잔디광장",
+      "host": "인천광역시 주최, (사)인천공정무역협의회 주관",
+      "summary": "공정무역 커피와 제품 무료 시음·시식, 체험 부스, 제품 전시·판매, 공연",
+      "details": [
+        "공정무역 제품 무료 시음·시식, 전시·판매",
+        "단체·학교별 체험 프로그램",
+        "13:30~ 식전공연·개막식·뮤지컬 갈라쇼·팝페라 축하공연",
+        "참여 이벤트: 도전 골든벨, 공정무역 제품 빨리 먹기"
+      ],
+      "fee": "무료",
+      "status": "confirmed",
+      "sources": [
+        {
+          "label": "인천in 2026-11-12",
+          "url": "http://www.incheonin.com/news/articleView.html?idxno=122220"
+        },
+        {
+          "label": "오마이뉴스",
+          "url": "https://www.ohmynews.com/NWS_Web/View/at_pg.aspx?CNTN_CD=A0003284383"
+        }
+      ],
+      "id": "2026-11-14-2026-인천-공정무역-페스티벌"
+    },
+    {
       "title": "인천아트쇼 2026",
       "short": "인천아트쇼 2026",
       "category": "nearby",
